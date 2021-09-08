@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/1.0" id="Definitions_2595e9e" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="3.5.0">
+  <decision id="non_funded_agreement" name="Non-Funded Agreement">
+    <extensionElements>
+      <biodi:bounds x="540" y="160" width="180" height="80" />
+    </extensionElements>
+    <decisionTable id="decisionTable_1">
+      <input id="input_1" label="Non-Funded Agreement Response">
+        <inputExpression id="inputExpression_1" typeRef="string">
+          <text>ds.NonFundedAgreement</text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="Menu Status" name="non_funded_agreement.status" typeRef="string" />
+      <output id="OutputClause_0e60rre" label="Menu Message" name="non_funded_agreement.message" typeRef="string" />
+      <rule id="DecisionRule_0kslxw5">
+        <inputEntry id="UnaryTests_0yvim62">
+          <text>"true"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1pzdptj">
+          <text>"required"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0mperys">
+          <text>"required"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1ypfe1x">
+        <inputEntry id="UnaryTests_0dryb9d">
+          <text>"false"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1m8f9v6">
+          <text>"hidden"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0x0lm3d">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1vjji8d">
+        <inputEntry id="UnaryTests_0no4szj">
+          <text>"none"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_02yu1ij">
+          <text>"disable"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1yj7cuz">
+          <text>"disable"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0zhwugv">
+        <inputEntry id="UnaryTests_0czlqx2">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0litra5">
+          <text>"hidden"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1yoxnva">
+          <text></text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>
+ 

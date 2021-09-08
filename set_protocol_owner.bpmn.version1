@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_0be39yr" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.5.0">
+  <bpmn:process id="Process_set_protocol_owner" isExecutable="false">
+    <bpmn:startEvent id="StartEvent_1mhzkcr">
+      <bpmn:outgoing>SequenceFlow_1r3yrhy</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1r3yrhy" sourceRef="StartEvent_1mhzkcr" targetRef="ExclusiveGateway_0sz0czq" />
+    <bpmn:scriptTask id="Activity_1maogqj" name="Load PB Sponsors">
+      <bpmn:incoming>SequenceFlow_1e9wrfy</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1nl4euw</bpmn:outgoing>
+      <bpmn:script>if study_info("sponsors") is not None:
+	isPB_Sponsors = True
+	sponsors = study_info("sponsors")
+	spon_enum = []	
+	for x in sponsors:
+		spon_enum.append(
+			{
+				"value": x.SPONSOR_ID,
+				"label": x.SP_NAME
+			},
+		)
+	del(sponsors)
+else:
+	isPB_Sponsors = False
+	spon_enum = [
+		{
+			"value": 0,
+			"label": "No Sponsors Entered in PB"
+		},
+	]</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:userTask id="UserTask_0gah1gh" name="Select Owner Name From PB" camunda:formKey="IND1_HolderNameFromPB">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="ProtocolOwnerName" label="Owner Name" type="enum">
+            <camunda:properties>
+              <camunda:property id="data.name" value="spon_enum" />
+              <camunda:property id="data.value.column" value="value" />
+              <camunda:property id="data.label.column" value="label" />
+            </camunda:properties>
+          </camunda:formField>
+          <camunda:formField id="isPO_InSponsors" label="Was the Protocol Holder found?" type="boolean" defaultValue="True">
+            <camunda:properties>
+              <camunda:property id="description" value="If the holder name was not found, indicate here and text entry will be made available." />
+            </camunda:properties>
+            <camunda:validation>
+              <camunda:constraint name="required" config="True" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1nl4euw</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1srkdoj</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_0sz0czq" default="SequenceFlow_1e9wrfy">
+      <bpmn:incoming>SequenceFlow_1r3yrhy</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1e9wrfy</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_0npxfd6</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_007szxl</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="UserTask_13due9f" name="Select Owner Name From LDAP" camunda:formKey="PONameUVA">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="ProtocolOwnerName" label="Holder Name" type="autocomplete">
+            <camunda:properties>
+              <camunda:property id="ldap.lookup" value="True" />
+            </camunda:properties>
+          </camunda:formField>
+          <camunda:formField id="isPO_InLDAP" label="Was the UVA PI Holder for IND 1 found?" type="boolean" defaultValue="True">
+            <camunda:validation>
+              <camunda:constraint name="required" config="True" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0npxfd6</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1s5o13s</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_02bj3y0</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="UserTask_0ifmti6" name="Enter PO Text Name" camunda:formKey="IND1HolderNameText">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="ProtocolOwnerName.label" label="Holder Name" type="string" defaultValue="Fill In Please">
+            <camunda:validation>
+              <camunda:constraint name="required" config="True" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0g3ggjc</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1j6ry4c</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_0xysnya" name="Found in LDAP?" default="SequenceFlow_04bpxnb">
+      <bpmn:incoming>SequenceFlow_02bj3y0</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_09uc6k5</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_04bpxnb</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_1flig76">
+      <bpmn:incoming>SequenceFlow_1j6ry4c</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_04bpxnb</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0cnhiz1</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_107k2sl</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_1pmhlzs" name="Found in PB Sponsor List?" default="SequenceFlow_0cnhiz1">
+      <bpmn:incoming>SequenceFlow_1srkdoj</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0020dj1</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_0j1nkm5</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_0cnhiz1</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:scriptTask id="ScriptTask_0ju5ta5" name="(Re-)Set Owner Name">
+      <bpmn:incoming>SequenceFlow_09uc6k5</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0j1nkm5</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_007szxl</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0g3ggjc</bpmn:outgoing>
+      <bpmn:script>ProtocolOwnerName = {}
+ProtocolOwnerName['label'] = ""
+ProtocolOwnerName['value'] = "Text Entry"</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="ScriptTask_1vkecfc" name="Reset Owner Name">
+      <bpmn:incoming>SequenceFlow_0020dj1</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1s5o13s</bpmn:outgoing>
+      <bpmn:script>ProtocolOwnerName.label = ""
+ProtocolOwnerName.value = ""</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1e9wrfy" name="Owner Name from PB" sourceRef="ExclusiveGateway_0sz0czq" targetRef="Activity_1maogqj" />
+    <bpmn:sequenceFlow id="SequenceFlow_1srkdoj" sourceRef="UserTask_0gah1gh" targetRef="ExclusiveGateway_1pmhlzs" />
+    <bpmn:sequenceFlow id="SequenceFlow_0npxfd6" name="Owner Name Not from PB and Holder Type is UVA PI" sourceRef="ExclusiveGateway_0sz0czq" targetRef="UserTask_13due9f">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">not(isOwnerNameInPB) and ProtocolOwnerType.value == "UVaPI"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_007szxl" name="IND 1 Holder Name Not from PB and Holder Type is not UVA PI" sourceRef="ExclusiveGateway_0sz0czq" targetRef="ScriptTask_0ju5ta5">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">not(isOwnerNameInPB) and ProtocolOwnerType.value != "UVaPI"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_1s5o13s" sourceRef="ScriptTask_1vkecfc" targetRef="UserTask_13due9f" />
+    <bpmn:sequenceFlow id="SequenceFlow_02bj3y0" sourceRef="UserTask_13due9f" targetRef="ExclusiveGateway_0xysnya" />
+    <bpmn:sequenceFlow id="SequenceFlow_0g3ggjc" sourceRef="ScriptTask_0ju5ta5" targetRef="UserTask_0ifmti6" />
+    <bpmn:sequenceFlow id="SequenceFlow_1j6ry4c" sourceRef="UserTask_0ifmti6" targetRef="ExclusiveGateway_1flig76" />
+    <bpmn:sequenceFlow id="SequenceFlow_09uc6k5" name="No, Text Entry Required" sourceRef="ExclusiveGateway_0xysnya" targetRef="ScriptTask_0ju5ta5">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">not(isPO_InLDAP)</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_04bpxnb" name="Yes" sourceRef="ExclusiveGateway_0xysnya" targetRef="ExclusiveGateway_1flig76" />
+    <bpmn:sequenceFlow id="SequenceFlow_0020dj1" name="No, PO Type is UVA PI" sourceRef="ExclusiveGateway_1pmhlzs" targetRef="ScriptTask_1vkecfc">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">not(isPO_InSponsors) and ProtocolOwnerType.value == "UVaPI"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_1nl4euw" sourceRef="Activity_1maogqj" targetRef="UserTask_0gah1gh" />
+    <bpmn:sequenceFlow id="SequenceFlow_0j1nkm5" name="No, PO Type is not UVA PI" sourceRef="ExclusiveGateway_1pmhlzs" targetRef="ScriptTask_0ju5ta5">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">not(isPO_InSponsors) and ProtocolBuilderType.value != "UVaPI"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_0cnhiz1" name="Yes" sourceRef="ExclusiveGateway_1pmhlzs" targetRef="ExclusiveGateway_1flig76" />
+    <bpmn:endEvent id="EndEvent_10mkh76">
+      <bpmn:incoming>SequenceFlow_107k2sl</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_107k2sl" sourceRef="ExclusiveGateway_1flig76" targetRef="EndEvent_10mkh76" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_set_protocol_owner">
+      <bpmndi:BPMNEdge id="SequenceFlow_107k2sl_di" bpmnElement="SequenceFlow_107k2sl">
+        <di:waypoint x="1095" y="387" />
+        <di:waypoint x="1142" y="387" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0cnhiz1_di" bpmnElement="SequenceFlow_0cnhiz1">
+        <di:waypoint x="640" y="155" />
+        <di:waypoint x="640" y="100" />
+        <di:waypoint x="1070" y="100" />
+        <di:waypoint x="1070" y="362" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="846" y="82" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0j1nkm5_di" bpmnElement="SequenceFlow_0j1nkm5">
+        <di:waypoint x="665" y="180" />
+        <di:waypoint x="800" y="180" />
+        <di:waypoint x="800" y="347" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="813" y="226" width="74" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1nl4euw_di" bpmnElement="SequenceFlow_1nl4euw">
+        <di:waypoint x="350" y="230" />
+        <di:waypoint x="350" y="180" />
+        <di:waypoint x="470" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0020dj1_di" bpmnElement="SequenceFlow_0020dj1">
+        <di:waypoint x="640" y="205" />
+        <di:waypoint x="640" y="280" />
+        <di:waypoint x="570" y="280" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="656" y="226" width="74" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_04bpxnb_di" bpmnElement="SequenceFlow_04bpxnb">
+        <di:waypoint x="640" y="362" />
+        <di:waypoint x="640" y="310" />
+        <di:waypoint x="1070" y="310" />
+        <di:waypoint x="1070" y="362" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="678" y="293" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_09uc6k5_di" bpmnElement="SequenceFlow_09uc6k5">
+        <di:waypoint x="665" y="387" />
+        <di:waypoint x="750" y="387" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="669" y="356" width="70" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1j6ry4c_di" bpmnElement="SequenceFlow_1j6ry4c">
+        <di:waypoint x="1000" y="387" />
+        <di:waypoint x="1045" y="387" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0g3ggjc_di" bpmnElement="SequenceFlow_0g3ggjc">
+        <di:waypoint x="850" y="387" />
+        <di:waypoint x="900" y="387" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_02bj3y0_di" bpmnElement="SequenceFlow_02bj3y0">
+        <di:waypoint x="570" y="387" />
+        <di:waypoint x="615" y="387" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1s5o13s_di" bpmnElement="SequenceFlow_1s5o13s">
+        <di:waypoint x="520" y="320" />
+        <di:waypoint x="520" y="347" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_007szxl_di" bpmnElement="SequenceFlow_007szxl">
+        <di:waypoint x="350" y="412" />
+        <di:waypoint x="350" y="520" />
+        <di:waypoint x="800" y="520" />
+        <di:waypoint x="800" y="430" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="701" y="447" width="79" height="66" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0npxfd6_di" bpmnElement="SequenceFlow_0npxfd6">
+        <di:waypoint x="375" y="387" />
+        <di:waypoint x="470" y="387" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="368" y="393" width="85" height="53" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1srkdoj_di" bpmnElement="SequenceFlow_1srkdoj">
+        <di:waypoint x="570" y="180" />
+        <di:waypoint x="615" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1e9wrfy_di" bpmnElement="SequenceFlow_1e9wrfy">
+        <di:waypoint x="350" y="362" />
+        <di:waypoint x="350" y="310" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="357" y="336" width="90" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1r3yrhy_di" bpmnElement="SequenceFlow_1r3yrhy">
+        <di:waypoint x="188" y="387" />
+        <di:waypoint x="325" y="387" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="StartEvent_1mhzkcr_di" bpmnElement="StartEvent_1mhzkcr">
+        <dc:Bounds x="152" y="369" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_16kljw2_di" bpmnElement="Activity_1maogqj">
+        <dc:Bounds x="300" y="230" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_0gah1gh_di" bpmnElement="UserTask_0gah1gh">
+        <dc:Bounds x="470" y="140" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_0sz0czq_di" bpmnElement="ExclusiveGateway_0sz0czq" isMarkerVisible="true">
+        <dc:Bounds x="325" y="362" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_13due9f_di" bpmnElement="UserTask_13due9f">
+        <dc:Bounds x="470" y="347" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_0ifmti6_di" bpmnElement="UserTask_0ifmti6">
+        <dc:Bounds x="900" y="347" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_0xysnya_di" bpmnElement="ExclusiveGateway_0xysnya" isMarkerVisible="true">
+        <dc:Bounds x="615" y="362" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="600" y="422" width="81" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_1flig76_di" bpmnElement="ExclusiveGateway_1flig76" isMarkerVisible="true">
+        <dc:Bounds x="1045" y="362" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_1pmhlzs_di" bpmnElement="ExclusiveGateway_1pmhlzs" isMarkerVisible="true">
+        <dc:Bounds x="615" y="155" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="670" y="146" width="68" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ScriptTask_0ju5ta5_di" bpmnElement="ScriptTask_0ju5ta5">
+        <dc:Bounds x="750" y="347" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ScriptTask_1vkecfc_di" bpmnElement="ScriptTask_1vkecfc">
+        <dc:Bounds x="470" y="240" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_10mkh76_di" bpmnElement="EndEvent_10mkh76">
+        <dc:Bounds x="1142" y="369" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

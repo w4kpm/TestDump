@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" id="Definitions_0o0ff2r" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="3.5.0">
+  <decision id="required_study_docs" name="Required Study Documents">
+    <decisionTable id="decisionTable_1">
+      <input id="input_1" label="CoI Management Plan Required?">
+        <inputExpression id="inputExpression_1" typeRef="integer">
+          <text>documents.Study_COIManPlan.required</text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="Menu Staus" name="study_documents.status" typeRef="string" />
+      <output id="OutputClause_0gppgf6" label="Menu Message" name="study_documents.message" typeRef="string" />
+      <rule id="DecisionRule_0h0od2e">
+        <description></description>
+        <inputEntry id="UnaryTests_09ctq71">
+          <text>True</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1we3duh">
+          <text>"required"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1hudehl">
+          <text>"The Conflict of Interest Management Plan is required.  Upload other Study documents if applicable"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0gbnvkg">
+        <description></description>
+        <inputEntry id="UnaryTests_1enoihd">
+          <text>False</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0r5plb1">
+          <text>"optional"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_10wzyn7">
+          <text>"Upload Study documents if applicable"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0zg0u2w">
+        <description></description>
+        <inputEntry id="UnaryTests_10f42xe">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0qnqsm5">
+          <text>"disabled"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1fvptpo">
+          <text>"There is a problem, please contact Support"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_5d31ba5" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.5.0">
+  <bpmn:process id="Process_1e4920c" isExecutable="true">
+    <bpmn:documentation>Avoid special characters: &amp; / \ . , [ ] { } ( ) ! ; : ' * ? &lt; &gt; | ¢ $ © in the naming of the files. It will cause problems.</bpmn:documentation>
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0kanc90</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0kanc90" sourceRef="StartEvent_1" targetRef="Activity_13mhmsj" />
+    <bpmn:endEvent id="Event_0zakcui">
+      <bpmn:documentation>Insert summary here</bpmn:documentation>
+      <bpmn:incoming>Flow_1cocaow</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="UploadUVACoverheet" name="Upload UVA Coversheet" camunda:formKey="Upload Coversheet">
+      <bpmn:documentation>**Process:** Upload the study protocol coversheet.
+
+
+{% if isUVA_IRBofRec %}
+UVA-HSR is the IRB of record
+{% else %}
+UVA-HSR is **not** the IRB of record
+{% endif %}
+What does &amp;#x1f512;indicate?[^1]&amp;emsp;&amp;emsp;File Naming Tips[^2]
+```[^1]
+&amp;#x1f512; indicates information will not be available for editing after submission to the IRB-HSR for pre-review.  Go to &lt;this needs to be updated&gt; to access the most updated documents.
+```
+```[^2]
+Avoid special characters: &amp; / \ . , [ ] { } ( ) ! ; : ' * ? &lt; &gt; | ¢ $ © in the naming of the files. It will cause problems.
+```</bpmn:documentation>
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="Study_Coversheet" label="Protocol Cover Sheet" type="file">
+            <camunda:properties>
+              <camunda:property id="help" value="Required for Full Board, Expedited, Non-Engaged, Exempt and Non-UVA IRB" />
+              <camunda:property id="group" value="Cover Sheet" />
+              <camunda:property id="label_expression" value="coversheet_label" />
+            </camunda:properties>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_03akr2a</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1i1xk8e</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1qj3qcy" sourceRef="Activity_13mhmsj" targetRef="UserTask_0xjrtpo" />
+    <bpmn:scriptTask id="Activity_13mhmsj" name="Load Data">
+      <bpmn:incoming>Flow_0kanc90</bpmn:incoming>
+      <bpmn:outgoing>Flow_1qj3qcy</bpmn:outgoing>
+      <bpmn:script>documents = study_info('documents')
+isUVA_IRBofRec = not(documents['NonUVAIRB_ContinApprNonUVAIRB']['required'])
+# set label_expressions
+if isUVA_IRBofRec:
+	for key, p in documents.items():
+		if p.workflow == "Protocol et al" and p.zip_if_uva_irb == "√":
+			if p.code == 'Study_Protocol_Document':
+				protocol_label = p.locked_if_uva_irb + ' ' + p.description
+				protocol_label.strip()
+			elif p.code == 'Study_Coversheet':
+				coversheet_label = p.locked_if_uva_irb + ' ' + p.description
+				coversheet_label.strip()
+			elif p.code == 'Study_App_Doc':
+				application_label = p.locked_if_uva_irb + ' ' + p.description
+				application_label.strip()
+else:
+	for key, p in documents.items():
+		if p.workflow == "Protocol et al" and p.zip_if_non_uva_irb == "√":
+			if p.code == 'Study_Protocol_Document':
+				protocol_label = p.locked_if_non_uva_irb + ' ' + p.description
+				protocol_label.strip()
+			elif p.code == 'NonUVAIRB_StudyProtocolCoversheet':
+				coversheet_label = p.locked_if_non_uva_irb + ' ' + p.description
+				coversheet_label.strip()
+			elif p.code == 'NonUVAIRB_App':
+				application_label = p.locked_if_non_uva_irb + ' ' + p.description
+				application_label.strip()
+
+del(documents)
+del(key)
+del(p)</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_0u0p7sk" name="Is UVA IRB of record?" default="SequenceFlow_18af7po">
+      <bpmn:incoming>SequenceFlow_0iofm3s</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_18af7po</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_1hzq0ci</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_18af7po" name="Yes" sourceRef="ExclusiveGateway_0u0p7sk" targetRef="Activity_1amc50k" />
+    <bpmn:userTask id="UserTask_1n0c48p" name="Upload non-UVA Application" camunda:formKey="Upload non-UVA Application">
+      <bpmn:documentation>**Process:** Upload the Non-UVA IRB of record application and accept the application type.
+
+
+{% if isUVA_IRBofRec %}
+UVA-HSR is the IRB of record
+{% else %}
+UVA-HSR is **not** the IRB of record
+{% endif %}
+What does &amp;#x1f512;indicate?[^1]&amp;emsp;&amp;emsp;File Naming Tips[^2]
+```[^1]
+&amp;#x1f512; indicates information will not be available for editing after submission to the IRB-HSR for pre-review.  Go to &lt;this needs to be updated&gt; to access the most updated documents.
+```
+```[^2]
+Avoid special characters: &amp; / \ . , [ ] { } ( ) ! ; : ' * ? &lt; &gt; | ¢ $ © in the naming of the files. It will cause problems.
+```</bpmn:documentation>
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="IRB_HSR_Application_Type" label="IRB-HSR Application Type" type="enum" defaultValue="NonUVAIRBAppl">
+            <camunda:properties>
+              <camunda:property id="group" value="Application" />
+              <camunda:property id="read_only" value="True" />
+            </camunda:properties>
+            <camunda:value id="NonUVAIRBAppl" name="Non-UVA IRB Application" />
+          </camunda:formField>
+          <camunda:formField id="NonUVAIRB_App" label="IRB-HSR Application" type="file">
+            <camunda:properties>
+              <camunda:property id="description" value="This will be added to the front of the Investigators Agreement." />
+              <camunda:property id="group" value="Application" />
+              <camunda:property id="label_expression" value="application_label" />
+            </camunda:properties>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0qb127i</bpmn:incoming>
+      <bpmn:outgoing>Flow_064wzdo</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1hzq0ci" name="No" sourceRef="ExclusiveGateway_0u0p7sk" targetRef="Activity_0ykr6oi">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">not(isUVA_IRBofRec)</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:userTask id="UserTask_0xjrtpo" name="Upload Protocol" camunda:formKey="Upload Protocol">
+      <bpmn:documentation>**Process:** Upload the study protocol and provide its version date and owner identifier.
+
+
+{% if isUVA_IRBofRec %}
+UVA-HSR is the IRB of record
+{% else %}
+UVA-HSR is **not** the IRB of record
+{% endif %}
+What does &amp;#x1f512;indicate?[^1]&amp;emsp;&amp;emsp;File Naming Tips[^2]
+```[^1]
+### What does &amp;#x1f512;indicate?
+&amp;#x1f512; indicates information will not be available for editing after submission to the IRB-HSR for pre-review.  Go to &lt;this needs to be updated&gt; to access the most updated documents.
+```
+```[^2]
+### File Naming Tips
+Avoid special characters: &amp; / \ . , [ ] { } ( ) ! ; : ' * ? &lt; &gt; | ¢ $ © in the naming of the files. It will cause problems.
+```</bpmn:documentation>
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="Study_Protocol_Document" label="Protocol" type="file">
+            <camunda:properties>
+              <camunda:property id="help" value="Required for Full Board, Expedited, and Non-UVA IRB." />
+              <camunda:property id="label_expression" value="protocol_label" />
+            </camunda:properties>
+          </camunda:formField>
+          <camunda:formField id="ProtocolVersionDate" label="Version Date" type="date">
+            <camunda:properties>
+              <camunda:property id="file_data" value="Study_Protocol_Document" />
+            </camunda:properties>
+          </camunda:formField>
+          <camunda:formField id="ProtocolOwnerID" label="Protocol Owner Identifier" type="string">
+            <camunda:properties>
+              <camunda:property id="description" value="Name or Number" />
+              <camunda:property id="help" value="Study number or identifier provided by the protocol owner (ie., industry trial)" />
+              <camunda:property id="file_data" value="Study_Protocol_Document" />
+            </camunda:properties>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1qj3qcy</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0iofm3s</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1i1xk8e" sourceRef="UploadUVACoverheet" targetRef="ExclusiveGateway_1tdcvba" />
+    <bpmn:sequenceFlow id="SequenceFlow_0iofm3s" sourceRef="UserTask_0xjrtpo" targetRef="ExclusiveGateway_0u0p7sk" />
+    <bpmn:userTask id="UserTask_116alt4" name="Upload UVA Application" camunda:formKey="Upload Application">
+      <bpmn:documentation>**Process:** Upload the IRB-HSR application and indicate the IRB-HSR application type.
+
+
+{% if isUVA_IRBofRec %}
+UVA-HSR is the IRB of record
+{% else %}
+UVA-HSR is **not** the IRB of record
+{% endif %}
+What does &amp;#x1f512;indicate?[^1]&amp;emsp;&amp;emsp;File Naming Tips[^2]
+```[^1]
+&amp;#x1f512; indicates information will not be available for editing after submission to the IRB-HSR for pre-review.  Go to &lt;this needs to be updated&gt; to access the most updated documents.
+```
+```[^2]
+Avoid special characters: &amp; / \ . , [ ] { } ( ) ! ; : ' * ? &lt; &gt; | ¢ $ © in the naming of the files. It will cause problems.
+```</bpmn:documentation>
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="IRB_HSR_Application_Type" label="IRB-HSR Application Type" type="enum">
+            <camunda:properties>
+              <camunda:property id="spreadsheet.name" value="IRB_HSR_Application_Type.xlsx" />
+              <camunda:property id="spreadsheet.label.column" value="Label" />
+              <camunda:property id="spreadsheet.value.column" value="Value" />
+              <camunda:property id="group" value="Application" />
+              <camunda:property id="file_data" value="Study_App_Doc" />
+            </camunda:properties>
+            <camunda:validation>
+              <camunda:constraint name="required" config="True" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="Study_App_Doc" label="IRB-HSR Application" type="file">
+            <camunda:properties>
+              <camunda:property id="description" value="This will be added to the front of the Investigators Agreement." />
+              <camunda:property id="group" value="Application" />
+              <camunda:property id="label_expression" value="application_label" />
+            </camunda:properties>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0n8v8pd</bpmn:incoming>
+      <bpmn:outgoing>Flow_05e5ocq</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_03akr2a" sourceRef="ExclusiveGateway_0a1rb1f" targetRef="UploadUVACoverheet" />
+    <bpmn:parallelGateway id="ExclusiveGateway_0a1rb1f">
+      <bpmn:incoming>Flow_058dzo4</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_03akr2a</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_0n8v8pd</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:parallelGateway id="ExclusiveGateway_1tdcvba">
+      <bpmn:incoming>SequenceFlow_1i1xk8e</bpmn:incoming>
+      <bpmn:incoming>Flow_05e5ocq</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ppew89</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_0n8v8pd" sourceRef="ExclusiveGateway_0a1rb1f" targetRef="UserTask_116alt4" />
+    <bpmn:sequenceFlow id="SequenceFlow_0qb127i" sourceRef="ExclusiveGateway_1we8zi8" targetRef="UserTask_1n0c48p" />
+    <bpmn:parallelGateway id="ExclusiveGateway_1we8zi8">
+      <bpmn:incoming>Flow_0hlnmfu</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0qb127i</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_14g002b</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:userTask id="UserTask_026xa54" name="Upload non-UVA Coversheet" camunda:formKey="UploadNonUVA_CS">
+      <bpmn:documentation>**Process:** Upload the study protocol coversheet.
+
+{% if isUVA_IRBofRec %}
+UVA-HSR is the IRB of record
+{% else %}
+UVA-HSR is **not** the IRB of record
+{% endif %}
+What does &amp;#x1f512;indicate?[^1]&amp;emsp;&amp;emsp;File Naming Tips[^2]
+```[^1]
+&amp;#x1f512; indicates information will not be available for editing after submission to the IRB-HSR for pre-review.  Go to &lt;this needs to be updated&gt; to access the most updated documents.
+```
+```[^2]
+Avoid special characters: &amp; / \ . , [ ] { } ( ) ! ; : ' * ? &lt; &gt; | ¢ $ © in the naming of the files. It will cause problems.
+```</bpmn:documentation>
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="NonUVAIRB_StudyProtocolCoversheet" label="Protocol Cover Sheet" type="file">
+            <camunda:properties>
+              <camunda:property id="help" value="Required for Full Board, Expedited, Non-Engaged, Exempt and Non-UVA IRB" />
+              <camunda:property id="group" value="Cover Sheet" />
+              <camunda:property id="label_expression" value="coversheet_label" />
+            </camunda:properties>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_14g002b</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_180ign3</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_14g002b" sourceRef="ExclusiveGateway_1we8zi8" targetRef="UserTask_026xa54" />
+    <bpmn:sequenceFlow id="SequenceFlow_180ign3" sourceRef="UserTask_026xa54" targetRef="ExclusiveGateway_1yiwjgt" />
+    <bpmn:parallelGateway id="ExclusiveGateway_1yiwjgt">
+      <bpmn:incoming>SequenceFlow_180ign3</bpmn:incoming>
+      <bpmn:incoming>Flow_064wzdo</bpmn:incoming>
+      <bpmn:outgoing>Flow_1kwx5mv</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:sequenceFlow id="Flow_1kwx5mv" sourceRef="ExclusiveGateway_1yiwjgt" targetRef="Activity_1lmwj2i" />
+    <bpmn:sequenceFlow id="Flow_1ppew89" sourceRef="ExclusiveGateway_1tdcvba" targetRef="Activity_1lmwj2i" />
+    <bpmn:sequenceFlow id="Flow_0hlnmfu" sourceRef="Activity_0ykr6oi" targetRef="ExclusiveGateway_1we8zi8" />
+    <bpmn:scriptTask id="Activity_0ykr6oi" name="Delete UVA IRB Files">
+      <bpmn:incoming>SequenceFlow_1hzq0ci</bpmn:incoming>
+      <bpmn:outgoing>Flow_0hlnmfu</bpmn:outgoing>
+      <bpmn:script>if is_file_uploaded('Study_Coversheet'):
+	delete_file('Study_Coversheet')
+
+if is_file_uploaded('Study_App_Doc'):
+	delete_file('Study_App_Doc')</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_058dzo4" sourceRef="Activity_1amc50k" targetRef="ExclusiveGateway_0a1rb1f" />
+    <bpmn:scriptTask id="Activity_1amc50k" name="Delete non-UVA IRB Files">
+      <bpmn:incoming>SequenceFlow_18af7po</bpmn:incoming>
+      <bpmn:outgoing>Flow_058dzo4</bpmn:outgoing>
+      <bpmn:script>if is_file_uploaded('NonUVAIRB_StudyProtocolCoversheet'):
+	delete_file('NonUVAIRB_StudyProtocolCoversheet')
+	
+if is_file_uploaded('NonUVAIRB_App'):
+	delete_file('NonUVAIRB_App')</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_05e5ocq" sourceRef="UserTask_116alt4" targetRef="ExclusiveGateway_1tdcvba" />
+    <bpmn:sequenceFlow id="Flow_064wzdo" sourceRef="UserTask_1n0c48p" targetRef="ExclusiveGateway_1yiwjgt" />
+    <bpmn:scriptTask id="Activity_1lmwj2i" name="Load Summary Info">
+      <bpmn:incoming>Flow_1kwx5mv</bpmn:incoming>
+      <bpmn:incoming>Flow_1ppew89</bpmn:incoming>
+      <bpmn:outgoing>Flow_1cocaow</bpmn:outgoing>
+      <bpmn:script># Load IRB Documents
+documents = study_info('documents')
+# Check if UVA is IrB of record
+isUVA_IRBofRec = not(documents['NonUVAIRB_ContinApprNonUVAIRB']['required'])
+# Retrieve document info
+Protocol_sum = documents.Study_Protocol_Document
+if isUVA_IRBofRec:
+	Coversheet_sum = documents.Study_Coversheet
+	Application_sum = documents.Study_App_Doc
+else:
+	Coversheet_sum = documents.NonUVAIRB_StudyProtocolCoversheet  
+	Application_sum = documents.NonUVAIRB_App
+
+del(documents)</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1cocaow" sourceRef="Activity_1lmwj2i" targetRef="Event_0zakcui" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1e4920c">
+      <bpmndi:BPMNEdge id="Flow_1cocaow_di" bpmnElement="Flow_1cocaow">
+        <di:waypoint x="1300" y="330" />
+        <di:waypoint x="1372" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_064wzdo_di" bpmnElement="Flow_064wzdo">
+        <di:waypoint x="980" y="260" />
+        <di:waypoint x="1160" y="260" />
+        <di:waypoint x="1160" y="235" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05e5ocq_di" bpmnElement="Flow_05e5ocq">
+        <di:waypoint x="980" y="500" />
+        <di:waypoint x="1160" y="500" />
+        <di:waypoint x="1160" y="475" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_058dzo4_di" bpmnElement="Flow_058dzo4">
+        <di:waypoint x="750" y="450" />
+        <di:waypoint x="785" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0hlnmfu_di" bpmnElement="Flow_0hlnmfu">
+        <di:waypoint x="740" y="210" />
+        <di:waypoint x="785" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ppew89_di" bpmnElement="Flow_1ppew89">
+        <di:waypoint x="1185" y="450" />
+        <di:waypoint x="1250" y="450" />
+        <di:waypoint x="1250" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1kwx5mv_di" bpmnElement="Flow_1kwx5mv">
+        <di:waypoint x="1185" y="210" />
+        <di:waypoint x="1250" y="210" />
+        <di:waypoint x="1250" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_180ign3_di" bpmnElement="SequenceFlow_180ign3">
+        <di:waypoint x="980" y="160" />
+        <di:waypoint x="1160" y="160" />
+        <di:waypoint x="1160" y="185" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_14g002b_di" bpmnElement="SequenceFlow_14g002b">
+        <di:waypoint x="810" y="185" />
+        <di:waypoint x="810" y="160" />
+        <di:waypoint x="880" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0qb127i_di" bpmnElement="SequenceFlow_0qb127i">
+        <di:waypoint x="810" y="235" />
+        <di:waypoint x="810" y="260" />
+        <di:waypoint x="880" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0n8v8pd_di" bpmnElement="SequenceFlow_0n8v8pd">
+        <di:waypoint x="810" y="475" />
+        <di:waypoint x="810" y="500" />
+        <di:waypoint x="880" y="500" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_03akr2a_di" bpmnElement="SequenceFlow_03akr2a">
+        <di:waypoint x="810" y="425" />
+        <di:waypoint x="810" y="400" />
+        <di:waypoint x="880" y="400" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0iofm3s_di" bpmnElement="SequenceFlow_0iofm3s">
+        <di:waypoint x="510" y="330" />
+        <di:waypoint x="575" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1i1xk8e_di" bpmnElement="SequenceFlow_1i1xk8e">
+        <di:waypoint x="980" y="400" />
+        <di:waypoint x="1160" y="400" />
+        <di:waypoint x="1160" y="425" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1hzq0ci_di" bpmnElement="SequenceFlow_1hzq0ci">
+        <di:waypoint x="600" y="305" />
+        <di:waypoint x="600" y="210" />
+        <di:waypoint x="640" y="210" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="608" y="262" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_18af7po_di" bpmnElement="SequenceFlow_18af7po">
+        <di:waypoint x="600" y="355" />
+        <di:waypoint x="600" y="450" />
+        <di:waypoint x="650" y="450" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="606" y="401" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1qj3qcy_di" bpmnElement="Flow_1qj3qcy">
+        <di:waypoint x="340" y="330" />
+        <di:waypoint x="410" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0kanc90_di" bpmnElement="Flow_0kanc90">
+        <di:waypoint x="148" y="330" />
+        <di:waypoint x="240" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="112" y="312" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0zakcui_di" bpmnElement="Event_0zakcui">
+        <dc:Bounds x="1372" y="312" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1rp9n6c_di" bpmnElement="UploadUVACoverheet">
+        <dc:Bounds x="880" y="360" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0lqxtjg_di" bpmnElement="Activity_13mhmsj">
+        <dc:Bounds x="240" y="290" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_0u0p7sk_di" bpmnElement="ExclusiveGateway_0u0p7sk" isMarkerVisible="true">
+        <dc:Bounds x="575" y="305" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="646" y="316" width="68" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_1n0c48p_di" bpmnElement="UserTask_1n0c48p">
+        <dc:Bounds x="880" y="220" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_0xjrtpo_di" bpmnElement="UserTask_0xjrtpo">
+        <dc:Bounds x="410" y="290" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_116alt4_di" bpmnElement="UserTask_116alt4">
+        <dc:Bounds x="880" y="460" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ParallelGateway_10ag3dn_di" bpmnElement="ExclusiveGateway_0a1rb1f">
+        <dc:Bounds x="785" y="425" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ParallelGateway_0scigjd_di" bpmnElement="ExclusiveGateway_1tdcvba">
+        <dc:Bounds x="1135" y="425" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ParallelGateway_1n5ux25_di" bpmnElement="ExclusiveGateway_1we8zi8">
+        <dc:Bounds x="785" y="185" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_026xa54_di" bpmnElement="UserTask_026xa54">
+        <dc:Bounds x="880" y="120" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ParallelGateway_09mos9b_di" bpmnElement="ExclusiveGateway_1yiwjgt">
+        <dc:Bounds x="1135" y="185" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0cqzll0_di" bpmnElement="Activity_0ykr6oi">
+        <dc:Bounds x="640" y="170" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0i6ex0i_di" bpmnElement="Activity_1amc50k">
+        <dc:Bounds x="650" y="410" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0vlww5w_di" bpmnElement="Activity_1lmwj2i">
+        <dc:Bounds x="1200" y="290" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

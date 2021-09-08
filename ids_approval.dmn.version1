@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/1.0" id="Definitions_d00905e" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="3.5.0">
+  <decision id="ids_approval" name="IDS Approval">
+    <extensionElements>
+      <biodi:bounds x="480" y="270" width="180" height="80" />
+    </extensionElements>
+    <decisionTable id="decisionTable_1">
+      <input id="input_1" label="IDS Approval Doc">
+        <inputExpression id="inputExpression_1" typeRef="boolean" expressionLanguage="python">
+          <text>documents.UVACompl_IDSNotification.required</text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="Menu Status" name="ids_approval.status" typeRef="string" />
+      <output id="OutputClause_1t1od9z" label="Menu Message" name="ids_approval.message" typeRef="string" />
+      <rule id="DecisionRule_0f2kth5">
+        <inputEntry id="UnaryTests_01cdo62">
+          <text>True</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0q6u298">
+          <text>"required"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1hz090e">
+          <text>"required"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_15xg8zp">
+        <inputEntry id="UnaryTests_0rzsizc">
+          <text>False</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1sepl6z">
+          <text>"hidden"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_05vgkmu">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1b7mb2a">
+        <inputEntry id="UnaryTests_18v49i1">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_18aytno">
+          <text>"hidden"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0lf3cry">
+          <text></text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/1.0" id="Definitions_98525cf" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="3.5.0">
+  <decision id="irb_ra_req_form_non_uva_irb_of_rec" name="IRB RA Req Form: Non-UVA IRB of Record">
+    <extensionElements>
+      <biodi:bounds x="660" y="240" width="180" height="80" />
+    </extensionElements>
+    <decisionTable id="decisionTable_1">
+      <input id="input_1" label="IRB RA Request Form: Non-UVA IRB of Record Doc">
+        <inputExpression id="inputExpression_1" typeRef="boolean" expressionLanguage="python">
+          <text>documents.NonUVAIRB_RelAgreeRequestForm.required</text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="Menu Status" name="irb_ra_req_form_non_uva_irb_of_rec.status" typeRef="string" />
+      <output id="OutputClause_03gu64g" label="Menu Message" name="irb_ra_req_form_non_uva_irb_of_rec.message" typeRef="string" />
+      <rule id="DecisionRule_07dlv8m">
+        <inputEntry id="UnaryTests_1rw2711">
+          <text>True</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1mtlr4n">
+          <text>"required"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_15z9sg2">
+          <text>"required"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0bleefj">
+        <inputEntry id="UnaryTests_0scs75c">
+          <text>False</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1pqb193">
+          <text>"hidden"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0dnp7mm">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1j5ii4g">
+        <inputEntry id="UnaryTests_0j51ltn">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0k73imr">
+          <text>"hidden"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1se9ot5">
+          <text></text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>
+ 

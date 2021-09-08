@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" id="Definitions_0o0ff2r" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="3.5.0">
+  <decision id="decision_ind_check" name="IND Check">
+    <decisionTable id="decisionTable_1">
+      <input id="input_1" label="IS_IND in PB">
+        <inputExpression id="inputExpression_1" typeRef="integer">
+          <text>is_ind</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1yk6kx1" label="IND_1 Number in PB?">
+        <inputExpression id="LiteralExpression_00xhtjw" typeRef="string">
+          <text>ind_1</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_069sith" label="IND_2 Number?">
+        <inputExpression id="LiteralExpression_1h9kd8o" typeRef="string">
+          <text>ind_2</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0d0vpur" label="IND_3 Number?">
+        <inputExpression id="LiteralExpression_0zbsg01" typeRef="string">
+          <text>ind_3</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_0hv86z0" label="Study Exempt DMN?" name="isStudyExemptDMN" typeRef="boolean" />
+      <output id="OutputClause_1kg2aiz" label="Study Exempt Init" name="isStudyExempt" typeRef="boolean" />
+      <output id="OutputClause_08qk83g" label="IND 1 Field Value" name="IRB_IND1_Number" typeRef="string" />
+      <output id="OutputClause_00gl2e1" label="IND 1 Holder Type Default" name="IND1_Holder_Type_Default" typeRef="string" />
+      <output id="OutputClause_1a9ypxf" label="IND 2 Field Value" name="IRB_IND2_Number" typeRef="string" />
+      <output id="OutputClause_1p7k9dn" label="IND 2 Holder Type Default" name="IND2_Holder_Type_Default" typeRef="string" />
+      <output id="OutputClause_0ysbmmv" label="IND 3 Field Value" name="IRB_IND3_Number" typeRef="string" />
+      <output id="OutputClause_19dr73j" label="IND 3 Holder Type Default" name="IND3_Holder_Type_Default" typeRef="string" />
+      <output id="OutputClause_0xcdkqm" label="IND Message" name="ind_message" typeRef="string" />
+      <rule id="DecisionRule_0teanii">
+        <description>3 IND #s</description>
+        <inputEntry id="UnaryTests_0akfjdp">
+          <text>1</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1c88e2t">
+          <text>!= ""</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0zfrdlt">
+          <text>!= ""</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_07drghr">
+          <text>!= ""</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_19lt0nw">
+          <text>False</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1etaj4z">
+          <text>False</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1fiijih">
+          <text>ind_1</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0poxxxi">
+          <text>""</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0c5sv9n">
+          <text>ind_2</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0f7j05s">
+          <text>""</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0ukag0c">
+          <text>ind_3</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0lu82no">
+          <text>""</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1tw8tzn">
+          <text>"Provide requested information for the three IND numbers associated with this study entered in Protocol Builder"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_199dgpt">
+        <description>2 IND #s</description>
+        <inputEntry id="UnaryTests_1ec0msc">
+          <text>1</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0h3sj7g">
+          <text>!= ""</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ji4kgh">
+          <text>!= ""</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_10gxrx9">
+          <text>== ""</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1j7zho2">
+          <text>False</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_12ueoh8">
+          <text>False</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1rwd1ja">
+          <text>ind_1</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0ad2uxf">
+          <text>""</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0iyqi80">
+          <text>ind_2</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_028vt92">
+          <text>""</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1munivg">
+          <text>"Not entered in Protocol Builder"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0d1tnpm">
+          <text>"NA"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1nvcjhv">
+          <text>"Provide requested information for the two IND numbers associated with this study entered in Protocol Builder and any others with numbers pending or exempt"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0h0od2e">
+        <description>1 IND #</description>
+        <inputEntry id="UnaryTests_09ctq71">
+          <text>1</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1cub5pk">
+          <text>!= ""</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0aubvru">
+          <text>== ""</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0rjeqez">
+          <text>== ""</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1mbhl7v">
+          <text>False</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_13uflgu">
+          <text>False</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_15ikz7u">
+          <text>ind_1</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1r4525b">
+          <text>""</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1vmvj00">
+          <text>"Not entered in Protocol Builder"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1i04eoi">
+          <text>"NA"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0bx4383">
+          <text>"Not entered in Protocol Builder"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_059bp6f">
+          <text>"NA"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_19cvvhd">
+          <text>"Provide requested information for the IND number associated with this study entered in Protocol Builder (and any others with numbers pending or exempt) Fix this"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0z0tcm0">
+        <description>Invalid entry sequence, IND_1 and IND_3 entered, no IND_2</description>
+        <inputEntry id="UnaryTests_1kf86r3">
+          <text>1</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0jm1wzq">
+          <text>!= ""</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_14itgac">
+          <text>== ""</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1prht5p">
+          <text>!= ""</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0tcdkb6">
+          <text>False</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_14wm8jy">
+          <text>False</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1qul3vr">
+          <text>ind_1</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1rk7tv0">
+          <text>""</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1kw2w4x">
+          <text>"Not entered in Protocol Builder"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_026wpgs">
+          <text>"NA"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1ec0zoc">
+          <text>ind_3</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1xxycbv">
+          <text>""</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1fa5e2o">
+          <text>"Two IND #s entered, but not in sequential Protocol Builder fields.  Please correct in Protocol Builder if this was not intended"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0bwkqh7">
+        <description>Invalid entry sequence, IND_2 and IND_3 entered, no IND_1</description>
+        <inputEntry id="UnaryTests_13ig4fh">
+          <text>1</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_11kb6cw">
+          <text>== ""</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0sfwtwo">
+          <text>!= ""</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0xxmh5j">
+          <text>!= ""</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1hg0a57">
+          <text>False</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0tsbzyl">
+          <text>False</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_13g0u0n">
+          <text>"Not entered in Protocol Builder"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_16b3hnf">
+          <text>""</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1s6utug">
+          <text>ind_2</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0qfd8sk">
+          <text>""</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0bacx0w">
+          <text>ind_3</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1fcdh57">
+          <text>""</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0xhjgjn">
+          <text>"Two IND #s entered, but not in sequential Protocol Builder fields.  Please correct in Protocol Builder if this was not intended"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0aubiri">
+        <description>Invalid entry sequence, IND_2 entered, no IND_1 and IND_3</description>
+        <inputEntry id="UnaryTests_06o2bff">
+          <text>1</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0a79wl7">
+          <text>== ""</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1o02de0">
+          <text>!= ""</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1n6nr7w">
+          <text>== ""</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0x8gyo3">
+          <text>False</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_13l7n4h">
+          <text>False</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_05b12fr">
+          <text>"Not entered in Protocol Builder"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_09kkq6s">
+          <text>""</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1dr1sdq">
+          <text>ind_2</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0e12xk4">
+          <text>""</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0kzme1x">
+          <text>"Not entered in Protocol Builder"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1piefr7">
+          <text>"NA"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0oad9ah">
+          <text>"One IND #s entered, but not in the first Protocol Builder field.  Please correct in Protocol Builder if this was not intended"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1kp5i27">
+        <description>Invalid entry sequence, IND_3 entered, no IND_1 and IND_2</description>
+        <inputEntry id="UnaryTests_0c0oxqi">
+          <text>1</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1hcjrkk">
+          <text>== ""</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0xao0nq">
+          <text>== ""</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1eonsag">
+          <text>!= ""</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_17b6gro">
+          <text>False</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_08rlto7">
+          <text>False</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1qsomfm">
+          <text>"Not entered in Protocol Builder"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1z13d2v">
+          <text>""</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0m8n2hh">
+          <text>"Not entered in Protocol Builder"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0zvuyqt">
+          <text>"NA"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0nb0ikb">
+          <text>ind_3</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0e4liap">
+          <text>""</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1mcyec7">
+          <text>"One IND #s entered, but not in the first Protocol Builder field.  Please correct in Protocol Builder if this was not intended"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1vodqp8">
+        <inputEntry id="UnaryTests_1tpspfa">
+          <text>1</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0bkp3ds">
+          <text>== ""</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0dz5okk">
+          <text>== ""</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1f33zcd">
+          <text>== ""</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0z6ioo8">
+          <text>True</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0lyn9vt">
+          <text>True</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0qxk12m">
+          <text>"Not entered in Protocol Builder"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_00v619s">
+          <text>"NA"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_07bzcpu">
+          <text>"Not entered in Protocol Builder"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1x06xxp">
+          <text>"NA"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1fpotur">
+          <text>"Not entered in Protocol Builder"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_00x7ss1">
+          <text>"NA"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0ysg90w">
+          <text>"It appears that this study might be exmept from a FDA submission since no IND Numbers were entered in Protocol Builder.   If this is not the case, please indicagte so and you will be able to enter available information while waiting on your IND number(s)"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0m9aydp">
+        <description>No IND, PB Q#56 answered as No, should not be needed, but here as stopgap in case memu check failed</description>
+        <inputEntry id="UnaryTests_003n37j">
+          <text>0</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1fcaod2">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0hmnsvb">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0y6xian">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_18a1sbq">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0psaiz0">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0tkt63s">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1dpw7iz">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0i6mpvj">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1e3wt8a">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1lrscuy">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0a9ww2m">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1lbt5oy">
+          <text>"You should not be in this workflow since no IND was indicated in PB.  Please contact Support and inform them of this error"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0wz09ul">
+        <inputEntry id="UnaryTests_0ejngto">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0mf773o">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1g6bm6w">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_19oxlpg">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_066hgza">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_18gjpjm">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1lb640f">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_00sgljg">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1yh8b65">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0q4zyvk">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_10bphfn">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_03ecp5l">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1bm8bkw">
+          <text></text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

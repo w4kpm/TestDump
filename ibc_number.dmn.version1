@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" id="Definitions_0o0ff2r" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="3.5.0">
+  <decision id="ibc_number" name="IBC Number">
+    <decisionTable id="decisionTable_1">
+      <input id="input_1" label="IBC Number Doc">
+        <inputExpression id="inputExpression_1" typeRef="boolean">
+          <text>documents.CRC2_IBCNum.required</text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="Menu Staus" name="ibc_number.status" typeRef="string" />
+      <output id="OutputClause_1e5hn8o" label="Menu Message" name="ibc_number.message" typeRef="string" />
+      <rule id="DecisionRule_0h0od2e">
+        <description>IBC Number required</description>
+        <inputEntry id="UnaryTests_09ctq71">
+          <text>True</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1we3duh">
+          <text>"required"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0g5hbe0">
+          <text>"required"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0gbnvkg">
+        <description>IBC Number not required</description>
+        <inputEntry id="UnaryTests_1enoihd">
+          <text>False</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0r5plb1">
+          <text>"hidden"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1cbay9v">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0zg0u2w">
+        <description>Just in case</description>
+        <inputEntry id="UnaryTests_10f42xe">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0qnqsm5">
+          <text>"hidden"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1d7ja04">
+          <text></text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

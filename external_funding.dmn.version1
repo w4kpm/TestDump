@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/1.0" id="Definitions_2595e9e" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="3.5.0">
+  <decision id="external_funding" name="External Funding">
+    <extensionElements>
+      <biodi:bounds x="380" y="190" width="180" height="80" />
+    </extensionElements>
+    <decisionTable id="decisionTable_1">
+      <input id="input_1" label="External Funding Response">
+        <inputExpression id="inputExpression_1" typeRef="boolean">
+          <text>ds.ExternalFunding</text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="Menu Status" name="external_funding.status" typeRef="string" />
+      <output id="OutputClause_1y67yb4" label="Menu Message" name="external_funding.message" typeRef="string" />
+      <rule id="DecisionRule_0kslxw5">
+        <inputEntry id="UnaryTests_0yvim62">
+          <text>"true"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1pzdptj">
+          <text>"required"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0mo8mew">
+          <text>"required"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1ypfe1x">
+        <inputEntry id="UnaryTests_0dryb9d">
+          <text>"false"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1m8f9v6">
+          <text>"hidden"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1epi145">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1vjji8d">
+        <inputEntry id="UnaryTests_0no4szj">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_02yu1ij">
+          <text>"disabled"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0ynz8wx">
+          <text>"disabled"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0zhwugv">
+        <inputEntry id="UnaryTests_0czlqx2">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0litra5">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1ulq9la">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1i9zyqz">
+        <inputEntry id="UnaryTests_180z9c0">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0r9c07j">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_04xn51e">
+          <text></text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>
+ 
