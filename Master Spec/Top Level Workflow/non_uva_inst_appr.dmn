@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/1.0" id="Definitions_bf80e10" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="3.5.0">
+  <decision id="non_uva_inst_appr" name="Non-UVA Institutional Approval ">
+    <extensionElements>
+      <biodi:bounds x="250" y="160" width="180" height="80" />
+    </extensionElements>
+    <decisionTable id="decisionTable_1">
+      <input id="InputClause_1i6rck0" label="IS_UVA_LOCATION">
+        <inputExpression id="LiteralExpression_1skiu57" typeRef="integer">
+          <text>details.IS_UVA_LOCATION</text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="Menu Status" name="non_uva_institutional_approval.status" typeRef="string" />
+      <output id="OutputClause_17omino" label="Menu Message" name="non_uva_institutional_approval.message" typeRef="string" />
+      <rule id="DecisionRule_0rjpojd">
+        <inputEntry id="UnaryTests_1aktd6u">
+          <text>1</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1683cqx">
+          <text>"required"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1ldh37w">
+          <text>"required"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0sbbe4b">
+        <inputEntry id="UnaryTests_03owmye">
+          <text>0</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_02wofie">
+          <text>"hidden"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_04o1yot">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0u62y0k">
+        <inputEntry id="UnaryTests_0sevef0">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_06qtpzj">
+          <text>"hidden"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_04ob1u4">
+          <text></text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>
+ 

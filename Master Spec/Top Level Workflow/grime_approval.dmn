@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/1.0" id="Definitions_03b4a90" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="3.5.0">
+  <decision id="grime_approval" name="GRIME Approval">
+    <extensionElements>
+      <biodi:bounds x="570" y="210" width="180" height="80" />
+    </extensionElements>
+    <decisionTable id="decisionTable_1">
+      <input id="input_1" label="GRIME Approval Doc">
+        <inputExpression id="inputExpression_1" typeRef="boolean" expressionLanguage="python">
+          <text>documents.UVACompl_GRIME.required</text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="Menu Status" name="grime.status" typeRef="string" />
+      <output id="OutputClause_11doz3f" label="Menu Message" name="grime.message" typeRef="string" />
+      <rule id="DecisionRule_1e420c0">
+        <inputEntry id="UnaryTests_1ykpedd">
+          <text>True</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_15agbwf">
+          <text>"required"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_11efvj8">
+          <text>"required"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_02psucd">
+        <inputEntry id="UnaryTests_0nyi4cp">
+          <text>False</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0jmxln5">
+          <text>"hidden"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0it0130">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1ue4wnu">
+        <inputEntry id="UnaryTests_00q8s1f">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1wys3fa">
+          <text>"hidden"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_14786bq">
+          <text></text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>
+ 

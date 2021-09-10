@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" id="Definitions_0o0ff2r" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="3.5.0">
+  <decision id="drug_device_documents" name="Drug Device Documents">
+    <decisionTable id="decisionTable_1">
+      <input id="input_1" label="Package Inserts required?">
+        <inputExpression id="inputExpression_1" typeRef="boolean">
+          <text>documents.DrugDevDoc_PackageInsert.required</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0w0lhye" label="Investigator Brochure required?">
+        <inputExpression id="LiteralExpression_0985j3q" typeRef="boolean">
+          <text>documents.DrugDevDoc_InvestBrochure.required</text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="Menu Staus" name="drug_device_documents.status" typeRef="string" />
+      <output id="OutputClause_0gppgf6" label="Menu Message" name="drug_device_documents.message" typeRef="string" />
+      <output id="OutputClause_0g1eszz" typeRef="string" />
+      <rule id="DecisionRule_0h0od2e">
+        <description></description>
+        <inputEntry id="UnaryTests_09ctq71">
+          <text>True</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_16t902b">
+          <text>True</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1we3duh">
+          <text>"required"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1hudehl">
+          <text>"The Package Inserts and Investigator Brochure documents are required.  Upload other Drug Device documents, if applicable "</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1r3iuld">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_19fpw81">
+        <inputEntry id="UnaryTests_12igdvs">
+          <text>True</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1st1l47">
+          <text>False</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1kwsybi">
+          <text>"required"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_18slr5o">
+          <text>"The Package Inserts is required.  Upload other Drug Device documents, if applicable "</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1berlds">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0gbnvkg">
+        <description></description>
+        <inputEntry id="UnaryTests_1enoihd">
+          <text>False</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0dn14pe">
+          <text>True</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0r5plb1">
+          <text>"required"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_10wzyn7">
+          <text>"The Investigator Brochure documents is required.  Upload other Drug Device documents, if applicable "</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_15h2w8u">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0br4cmi">
+        <inputEntry id="UnaryTests_1x7xr5t">
+          <text>False</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_10cdb2p">
+          <text>False</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_134fv1r">
+          <text>"optional"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_04i67ev">
+          <text>"Upload Drug Device documents, if applicable "</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_18yzt41">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0zg0u2w">
+        <description></description>
+        <inputEntry id="UnaryTests_10f42xe">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_081v0wp">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0qnqsm5">
+          <text>"disabled"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1fvptpo">
+          <text>"There is a problem, please contact Support"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0zlgne3">
+          <text></text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>
