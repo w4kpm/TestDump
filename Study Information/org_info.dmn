@@ -1,0 +1,988 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" id="Definitions" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="3.5.0">
+  <decision id="org_info" name="Org Info">
+    <decisionTable id="decisionTable_1">
+      <input id="input_1" label="Org Name">
+        <inputExpression id="inputExpression_1" typeRef="string">
+          <text>org_name</text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="School Name" name="SchlName" typeRef="string" />
+      <output id="output_2" label="Department Name" name="DeptName" typeRef="string" />
+      <output id="output_3" label="Org Variations" name="enum_variations" typeRef="string" />
+      <output id="OutputClause_1bqxquh" typeRef="string" />
+      <rule id="DecisionRule_8i9eg0o">
+        <description></description>
+        <inputEntry id="UnaryTests_ol8Rv9O">
+          <text>"Schools"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_w5ae7wX">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_sh4fwx3">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_Q6OZqrl">
+          <text>[{"value":"AS","label":"AS-Arts &amp; Sciences"}, {"value":"CU","label":"CU-Education and Human Development"}, {"value":"EN","label":"EN-Engineering and Applied Science"}, {"value":"MD","label":"MD-Medicine"}, {"value":"NR","label":"NR-Nursing"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0oqxoc0">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_dffubuo">
+        <description></description>
+        <inputEntry id="UnaryTests_uFjbcpg">
+          <text>"AS-Arts &amp; Sciences"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_EBLjSAv">
+          <text>"College and Graduate School of Arts &amp; Sciences"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_cNsfLYz">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_NIyBAjY">
+          <text>[{"value":"10040","label":"10040 AS-VA Quarterly Review"}, {"value":"31600","label":"31600 AS-Office of the Dean"}, {"value":"31605","label":"31605 AS-Research Admin"}, {"value":"31610","label":"31610 AS-Vivarium"}, {"value":"31615","label":"31615 AS-COMP Arts &amp; Sciences Computing Services"}, {"value":"31617","label":"31617 AS-Learning Design &amp; Technology"}, {"value":"31630","label":"31630 AS-Undergrad College Ops"}, {"value":"31635","label":"31635 AS-Interdisciplinary Prgms"}, {"value":"31640","label":"31640 AS-Grad School"}, {"value":"31645","label":"31645 AS-Development"}, {"value":"31650","label":"31650 AS-American Sign Language"}, {"value":"31655","label":"31655 AS-Anthropology"}, {"value":"31658","label":"31658 AS-Archaeology"}, {"value":"31660","label":"31660 AS-Art"}, {"value":"31665","label":"31665 AS-Asian &amp; Middle Eastern Lang"}, {"value":"31670","label":"31670 AS-Astronomy"}, {"value":"31671","label":"31671 AS-VITA Inst for Theoretical Astronomy"}, {"value":"31675","label":"31675 AS-Bioethics"}, {"value":"31680","label":"31680 AS-Biology"}, {"value":"31685","label":"31685 AS-Blandy Experimental Farm"}, {"value":"31693","label":"31693 AS-BOXO Operations"}, {"value":"31694","label":"31694 AS-Business Services"}, {"value":"31695","label":"31695 AS-Chemistry"}, {"value":"31700","label":"31700 AS-Classics"}, {"value":"31710","label":"31710 AS-Ctr for East Asian Studies"}, {"value":"31715","label":"31715 AS-Center for German Studies"}, {"value":"31720","label":"31720 AS-Ctr for Russian &amp; E Europe Studies"}, {"value":"31725","label":"31725 AS-Ctr for South Asian Studies"}, {"value":"31729","label":"31729 AS-Cognitive Science"}, {"value":"31730","label":"31730 AS-Communications"}, {"value":"31733","label":"31733 AS-Democracy Initiative"}, {"value":"31734","label":"31734 AS-Diversity Equity Inclusion"}, {"value":"31735","label":"31735 AS-Drama Operations"}, {"value":"31740","label":"31740 AS-Heritage"}, {"value":"31745","label":"31745 AS-Drama Production"}, {"value":"31747","label":"31747 AS-E Asian Lang Lit &amp; Cultures"}, {"value":"31750","label":"31750 AS-Economics"}, {"value":"31755","label":"31755 AS-Editing Madison Papers"}, {"value":"31759","label":"31759 AS-Digital Editing Ctr"}, {"value":"31760","label":"31760 AS-Editing Wash Papers"}, {"value":"31764","label":"31764 AS-Engagements"}, {"value":"31765","label":"31765 AS-English-Eng Lit Ops"}, {"value":"31770","label":"31770 AS-Creative Writing"}, {"value":"31780","label":"31780 AS-New Literary History"}, {"value":"31785","label":"31785 AS-Studies in Bibliography"}, {"value":"31795","label":"31795 AS-Environmental Sciences"}, {"value":"31796","label":"31796 AS-Env Thought and Practice"}, {"value":"31797","label":"31797 AS-European Studies"}, {"value":"31798","label":"31798 AS-Equity Center"}, {"value":"31805","label":"31805 AS-French Lit-Gen Linguistics"}, {"value":"31810","label":"31810 AS-German Lit"}, {"value":"31813","label":"31813 AS-Global Studies"}, {"value":"31815","label":"31815 AS-Dept of Politics"}, {"value":"31825","label":"31825 AS-History"}, {"value":"31829","label":"31829 AS-Institute of the Humanities &amp; Global Cultures"}, {"value":"31830","label":"31830 AS-Inst-Adv Stud in Culture"}, {"value":"31835","label":"31835 AS-Inst-Afri-Am &amp; African Stud"}, {"value":"31840","label":"31840 AS-Inst-Nuclear &amp; Particle Physics"}, {"value":"31842","label":"31842 AS-Inst of World Languages"}, {"value":"31845","label":"31845 AS-Jewish Studies"}, {"value":"31848","label":"31848 AS-Latin American Studies"}, {"value":"31849","label":"31849 AS-Linguistics"}, {"value":"31850","label":"31850 AS-Mathematics"}, {"value":"31855","label":"31855 AS-Media Studies"}, {"value":"31856","label":"31856 AS-Medieval Studies"}, {"value":"31857","label":"31857 AS-MidEast &amp; SAsia Lang &amp; Cult"}, {"value":"31860","label":"31860 AS-Mt Lake Biol Station"}, {"value":"31865","label":"31865 AS-Music"}, {"value":"31867","label":"31867 AS-Neuroscience"}, {"value":"31870","label":"31870 AS-Philosophy"}, {"value":"31875","label":"31875 AS-Physics"}, {"value":"31880","label":"31880 AS-Political &amp; Social Thought"}, {"value":"31885","label":"31885 AS-Psychology"}, {"value":"31886","label":"31886 AS-Quantitative Collaboration"}, {"value":"31890","label":"31890 AS-Religious Studies"}, {"value":"31895","label":"31895 AS-Slavic Languages &amp; Lit"}, {"value":"31900","label":"31900 AS-Sociology"}, {"value":"31903","label":"31903 AS-Space Management"}, {"value":"31905","label":"31905 AS-Spanish, Italian &amp; Portuguese"}, {"value":"31910","label":"31910 AS-AASC-Designated State Climatology Office"}, {"value":"31915","label":"31915 AS-Statistics"}, {"value":"31920","label":"31920 AS-Women, Gender &amp; Sexuality Studies"}, {"value":"31931","label":"31931 AS-Ctr, Religion &amp; Democracy"}, {"value":"31935","label":"31935 AS-American Studies"}, {"value":"31940","label":"31940 AS-Political Phil,Policy&amp;Law"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_16vjwng">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_2q2pkop">
+        <description></description>
+        <inputEntry id="UnaryTests_FaQA0ey">
+          <text>"CU-Education and Human Development"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_zAyJgPy">
+          <text>"School of Education and Human Development"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_Cy3t1Pp">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_FQfm5Ga">
+          <text>[{"value":"31150","label":"31150 CU-Deans Office"}, {"value":"31155","label":"31155 CU-Curr Instr &amp; Sp Ed"}, {"value":"31160","label":"31160 CU-Human Svcs"}, {"value":"31165","label":"31165 CU-Leadshp, Fndns &amp; Pol Studies"}, {"value":"31170","label":"31170 CU-CASTL"}, {"value":"31175","label":"31175 CU-Youth-Nex"}, {"value":"31180","label":"31180 CU-Center on Education Policy"}, {"value":"31185","label":"31185 CU-Ctr for Study of Effective Teaching in Higher Ed"}, {"value":"31190","label":"31190 CU-Sheila C Johnson Center for Human Services"}, {"value":"31195","label":"31195 CU-Curry Off-Grounds"}, {"value":"31200","label":"31200 CU-Kinesiology"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1y7dhz5">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_ntyoree">
+        <description></description>
+        <inputEntry id="UnaryTests_W3gjgg7">
+          <text>"EN-Engineering and Applied Science"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_umKFqWO">
+          <text>"School of Engineering and Applied Science"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_DP7biJ1">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_fGSes0w">
+          <text>[{"value":"31250","label":"31250 EN-Deans Office"}, {"value":"31251","label":"31251 EN-CSMEE"}, {"value":"31252","label":"31252 EN-DO-Development"}, {"value":"31255","label":"31255 EN-Administration"}, {"value":"31256","label":"31256 EN-Stockroom"}, {"value":"31257","label":"31257 EN-Machine Shop"}, {"value":"31258","label":"31258 EN-Mail Room"}, {"value":"31259","label":"31259 EN-Renovation/Techs"}, {"value":"31260","label":"31260 EN-Institutional Funds"}, {"value":"31262","label":"31262 EN-ENG Communications"}, {"value":"31264","label":"31264 EN-Finance Operations"}, {"value":"31265","label":"31265 EN-Post-Award Admin"}, {"value":"31270","label":"31270 EN-Academic Pgrms"}, {"value":"31275","label":"31275 EN-Grad Pgrms Office"}, {"value":"31280","label":"31280 EN-Coop Grad Engr Prgm"}, {"value":"31285","label":"31285 EN-Undergrad Office"}, {"value":"31290","label":"31290 EN-Career Svcs Prgm"}, {"value":"31295","label":"31295 EN-Office of Diversity &amp; Engagement"}, {"value":"31300","label":"31300 EN-Research Office"}, {"value":"31305","label":"31305 EN-Research/Ind Prgms"}, {"value":"31310","label":"31310 EN-Pre-Award Admin"}, {"value":"31311","label":"31311 EN-Info Technology"}, {"value":"31312","label":"31312 EN-Applied Research Institute"}, {"value":"31315","label":"31315 EN-Biomed Engr Dept"}, {"value":"31318","label":"31318 EN-Cntr for ENG in Medicine"}, {"value":"31320","label":"31320 EN-Chem Engr Dept"}, {"value":"31325","label":"31325 EN-Center for Transportation Studies"}, {"value":"31330","label":"31330 EN-Comp Science Dept"}, {"value":"31331","label":"31331 EN-CS Research Support Center"}, {"value":"31332","label":"31332 EN-Link Lab"}, {"value":"31335","label":"31335 EN-Elec/Computer Engr Dept"}, {"value":"31336","label":"31336 EN-IFAB FACILITY"}, {"value":"31338","label":"31338 EN-MMI"}, {"value":"31340","label":"31340 EN-Mat Sci/Engr Dept"}, {"value":"31345","label":"31345 EN-Mech/Aero Engr Dept"}, {"value":"31350","label":"31350 EN-Eng Sys and Environment"}, {"value":"31355","label":"31355 EN-STS Dept"}, {"value":"31360","label":"31360 EN-Engineering and Society"}, {"value":"31365","label":"31365 EN-CAB"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1bca0g4">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_8rwzwsm">
+        <description></description>
+        <inputEntry id="UnaryTests_Pb4A59E">
+          <text>"MD-Medicine"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_yyHKtu1">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_PqQzrft">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_6XsOMk3">
+          <text>[{"value":"ANES","label":"ANES MD-Anesthesiology"}, {"value":"BEIR","label":"BEIR MD-Beirne Carter Center for Immunology Research"}, {"value":"BIOC","label":"BIOC MD-Biochemistry"}, {"value":"BIOE","label":"BIOE MD-Biomedical Engineering"}, {"value":"BIOM","label":"BIOM MD-Biochemistry &amp; Molecular Genetics"}, {"value":"CAGM","label":"CAGM MD-Center for Advancement of General Medicine"}, {"value":"CANC","label":"CANC MD-Cancer Cente"}, {"value":"CDBT","label":"CDBT MD-Center for Diabetes Technology"}, {"value":"CELL","label":"CELL MD-Cell Biology"}, {"value":"CMCP","label":"CMCP MD-Center for Membrane &amp; Cell Physiology"}, {"value":"CMDE","label":"CMDE MD-Center for Molecular Design"}, {"value":"CPHG","label":"CPHG MD-Center for Public Health Genomics"}, {"value":"CSGN","label":"CSGN MD-Center for Cell Signaling"}, {"value":"CSMH","label":"CSMH MD-Center for School Mental Health"}, {"value":"CTRR","label":"CTRR MD-Center for Research in Reproduction"}, {"value":"CVRC","label":"CVRC MD-Center for Cardiovascular Research"}, {"value":"DBHC","label":"DBHC MD-Diabetes &amp; Hormone Center"}, {"value":"DENT","label":"DENT MD-Dentistry"}, {"value":"DERM","label":"DERM MD-Dermatology"}, {"value":"DIAB","label":"DIAB MD-Diabetes Center"}, {"value":"DMED","label":"DMED MD-Medicine"}, {"value":"EMED","label":"EMED MD-Emergency Medicine"}, {"value":"FMED","label":"FMED MD-Family Medicine"}, {"value":"GCRC","label":"GCRC MD-General Clinical Research Center"}, {"value":"HCWS","label":"HCWS MD-Health Care Worker Safety"}, {"value":"HUMN","label":"HUMN MD-Human"}, {"value":"ILPP","label":"ILPP MD-Institute of Law, Psychiatry and Public Policy"}, {"value":"INMD","label":"INMD MD-Internal Medicine"}, {"value":"MICR","label":"MICR MD-Microbiology, Immunology, and Cancer Biology"}, {"value":"MPCI","label":"MPCI MD-Mellon Prostate Cancer Institute"}, {"value":"MPHY","label":"MPHY MD-Molecular Physiology &amp; Biological Physics"}, {"value":"NERS","label":"NERS MD-Neurosurgery"}, {"value":"NESC","label":"NESC MD-Neuroscience"}, {"value":"NEUR","label":"NEUR MD-Neurology"}, {"value":"OBGY","label":"OBGY MD-Obstetrics and Gynecology"}, {"value":"OPHT","label":"OPHT MD-Ophthalmology"}, {"value":"ORTP","label":"ORTP MD-Orthopaedic Surgery"}, {"value":"OTLY","label":"OTLY MD-Otolaryngology"}, {"value":"PATH","label":"PATH MD-Pathology"}, {"value":"PBHS","label":"PBHS MD-Public Health Sciences"}, {"value":"PEDT","label":"PEDT MD-Pediatrics"}, {"value":"PHAR","label":"PHAR MD-Pharmacology"}, {"value":"PHMR","label":"PHMR MD-Physical Medicine &amp; Rehabilitation"}, {"value":"PLSR","label":"PLSR MD-Plastic and Maxillofacial Surgery"}, {"value":"PSCH","label":"PSCH MD-Psychiatry and Neurobehavioral Sciences"}, {"value":"RADL","label":"RADL MD-Radiology and Medical Imaging"}, {"value":"RONC","label":"RONC MD-Radiation Oncology"}, {"value":"SURG","label":"SURG MD-Surgery"}, {"value":"THRV","label":"THRV MD-Translational Health Research Institute of VA"}, {"value":"UROL","label":"UROL MD-Urology"}, {"value":"VCTR","label":"VCTR MD-VCTR"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1sle207">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_ae6cb30">
+        <description></description>
+        <inputEntry id="UnaryTests_muXD4kJ">
+          <text>"Anesthesiology"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_tlSk4IV">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_8VtoLRK">
+          <text>"Anesthesiology"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_N9NkvPr">
+          <text>[{"value":"40700","label":"40700 MD-Anesthesiology"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_07jc07y">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_rxrdwza">
+        <description></description>
+        <inputEntry id="UnaryTests_4ogOkix">
+          <text>"Beirne Carter Center for Immunology Research"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_eezEvdZ">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_ADGmMAE">
+          <text>"Beirne Carter Center for Immunology Research"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_Ldb5WJy">
+          <text>[{"value":"40505","label":"40505 MD-Ctr/Beirne Carter"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1d0stet">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_s18mjin">
+        <description></description>
+        <inputEntry id="UnaryTests_QRcjaWe">
+          <text>"Biochemistry"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_zQWCy8S">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_34RI5xb">
+          <text>"Biochemistry"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_sZzheMj">
+          <text>[{"value":"40400","label":"40400 MD-Biochem/Mole Genetics"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_08jgomw">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_enblb0h">
+        <description></description>
+        <inputEntry id="UnaryTests_S1AtSvk">
+          <text>"Biomedical Engineering"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_ruKMB03">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_h4i89km">
+          <text>"Biomedical Engineering"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_8QODoYi">
+          <text>[{"value":"40520","label":"40520 MD-Ctr/Biomed Ethics"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1wj4u6y">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_5f2keko">
+        <description></description>
+        <inputEntry id="UnaryTests_cnNSzqV">
+          <text>"Biochemistry &amp; Molecular Genetics"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_c6fu9I1">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_M85iFgs">
+          <text>"Biochemistry &amp; Molecular Genetics"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_u3LzGug">
+          <text>[{"value":"40405","label":"40405 MD-Biomedical Eng"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1r8eoic">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_ldt9r5y">
+        <description></description>
+        <inputEntry id="UnaryTests_1LymAty">
+          <text>"Center for Advancement of General Medicine"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_qKX1ucq">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_2GdrFyj">
+          <text>"Center for Advancement of General Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_PbsFkyk">
+          <text>[{"value":"40515","label":"40515 MD-Ctr/Adv of Gen Med"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0kswm2n">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_ztazl4t">
+        <description></description>
+        <inputEntry id="UnaryTests_HNaWkH1">
+          <text>"Cancer Center"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_6zFKZrg">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_WrRoFbR">
+          <text>"Cancer Center"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_GL8Mmhl">
+          <text>[{"value":"40510","label":"40510 MD-Cancer Center"}, {"value":"40511","label":"40511 MD-Clinical Trials Office"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_038hboc">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_zhuywnd">
+        <description></description>
+        <inputEntry id="UnaryTests_vE9N7kG">
+          <text>"Center for Diabetes Technology"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_Q6rOJ1I">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_V4e0gGc">
+          <text>"Center for Diabetes Technology"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_GmuCUQp">
+          <text>[{"value":"40480","label":"40480 MD-Ctr for Diabetes Tech"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1cmvq3y">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_i3iircn">
+        <description></description>
+        <inputEntry id="UnaryTests_e5o7Tu4">
+          <text>"Cell Biology"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_e7LimiT">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_UKa7JRJ">
+          <text>"Cell Biology"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_P1joPZp">
+          <text>[{"value":"40410","label":"40410 MD-Cell Biology"}, {"value":"40545","label":"40545 MD-Ctr/Contrac Vaccinogens"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1wzew5o">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_klkno0l">
+        <description></description>
+        <inputEntry id="UnaryTests_vX7kuV4">
+          <text>"Center for Membrane &amp; Cell Physiology"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_BtKS4o9">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_O7sJv8V">
+          <text>"Center for Membrane &amp; Cell Physiology"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_JYSgsng">
+          <text>[{"value":"40475","label":"40475 MD-Ctr for Membrane &amp; Cell Ph"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1cexk7l">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_eh4d3sv">
+        <description></description>
+        <inputEntry id="UnaryTests_RrOERpB">
+          <text>"Center for Molecular Design"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_y5SQRoo">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_ZBuvpSN">
+          <text>"Center for Molecular Design"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_xCJkdEw">
+          <text>[{"value":"40584","label":"40584 MD-Ctr Molecular Design"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1qj8zcj">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_mddiswx">
+        <description></description>
+        <inputEntry id="UnaryTests_vbsMzFX">
+          <text>"Center for Public Health Genomics"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_tnykkYD">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_r8edotx">
+          <text>"Center for Public Health Genomics"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_cHByX1j">
+          <text>[{"value":"40530","label":"40530 MD-Ctr for Public Health Genomics"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0tbqcth">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_x1cf5gb">
+        <description></description>
+        <inputEntry id="UnaryTests_rUbJeSp">
+          <text>"Center for Cell Signaling"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_RItM6Xi">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_JoGfnLZ">
+          <text>"Center for Cell Signaling"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_Pv5s5mY">
+          <text>[{"value":"40590","label":"40590 MD-Ctr/Cell Signaling"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0exrhhj">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_afjylvc">
+        <description></description>
+        <inputEntry id="UnaryTests_i8mPihT">
+          <text>"Center for School Mental Health"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_XwWmXat">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_zG8Oehy">
+          <text>"Center for School Mental Health"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_RQhdL2x">
+          <text>[{"value":"40560","label":"40560 MD-Ctr/Mind/H Interaction"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1ll237r">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_vthceaw">
+        <description></description>
+        <inputEntry id="UnaryTests_o9l4eyP">
+          <text>"Center for Research in Reproduction"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_Hkr2g8h">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_JobLdKl">
+          <text>"Center for Research in Reproduction"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_3AqPQRB">
+          <text>[{"value":"40550","label":"40550 MD-Ctr/Res in Reprod"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_16d3vgj">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_u4sab1s">
+        <description></description>
+        <inputEntry id="UnaryTests_IPZYD9x">
+          <text>"Center for Cardiovascular Research"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_HdOTBwX">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_fuHi2rj">
+          <text>"Center for Cardiovascular Research"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_4YT4hLZ">
+          <text>[{"value":"40525","label":"40525 MD-Ctr/CV Research"}, {"value":"40526","label":"40526 MD-Reg SMC Develop Proj"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_07buy10">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_fjo23bf">
+        <description></description>
+        <inputEntry id="UnaryTests_LfO9hOM">
+          <text>"Diabetes &amp; Hormone Center"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_A3s5Qtv">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_Xe9kuqk">
+          <text>"Diabetes &amp; Hormone Center"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_zsToY9V">
+          <text>[{"value":"40465","label":"40465 MD-Diabetes &amp; Hormone Cntr"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0z0a4y7">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_wynkqud">
+        <description></description>
+        <inputEntry id="UnaryTests_VQCkNg4">
+          <text>"Dentistry"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_i9xx8Er">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_DCEeAdU">
+          <text>"Dentistry"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_oGaa9oG">
+          <text>[{"value":"40705","label":"40705 MD-Dentistry"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1hfi6kz">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_ighhmye">
+        <description></description>
+        <inputEntry id="UnaryTests_EnCh7lY">
+          <text>"Dermatology"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_pY5M0fn">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_xNWUM4E">
+          <text>"Dermatology"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1j4mLq2">
+          <text>[{"value":"40710","label":"40710 MD-Dermatology"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_105phap">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_v1ixgsx">
+        <description></description>
+        <inputEntry id="UnaryTests_IRMmi6G">
+          <text>"Diabetes Center"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_kieEDbw">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_SH01ehn">
+          <text>"Diabetes Center"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_97aZ313">
+          <text>[{"value":"40570","label":"40570 MD-Diabetes Center"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1kk8unb">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_v5e69bf">
+        <description></description>
+        <inputEntry id="UnaryTests_QYq7T6F">
+          <text>"Medicine"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_seVlaUV">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_UaVzFIe">
+          <text>"Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_AoX28YU">
+          <text>[{"value":"40200","label":"40200 MD-Deans Office"}, {"value":"40201","label":"40201 MD-Research Administration"}, {"value":"40202","label":"40202 MD-Research &amp; Clinical Trial Analytics"}, {"value":"40203","label":"40203 MD-Space"}, {"value":"40204","label":"40204 MD-School of Medicine Adm"}, {"value":"40205","label":"40205 MD-Center for Telehealth"}, {"value":"40206","label":"40206 MD-SOM Human Resources"}, {"value":"40207","label":"40207 MD-SOM Faculty Development"}, {"value":"40208","label":"40208 MD-Space Mgmt Operations"}, {"value":"40209","label":"40209 MD-GGBRI"}, {"value":"40210","label":"40210 MD-Admissions"}, {"value":"40211","label":"40211 MD-Dean\'s Office Operating Sources"}, {"value":"40212","label":"40212 MD-FIRST"}, {"value":"40215","label":"40215 MD-C/R Mem Hosp"}, {"value":"40216","label":"40216 MD-Lynchburg Family Medicine"}, {"value":"40220","label":"40220 MD-Clinical Affairs"}, {"value":"40225","label":"40225 MD-Cont Med Ed"}, {"value":"40226","label":"40226 MD-CME Conf Activity"}, {"value":"40230","label":"40230 MD-Curriculum"}, {"value":"40235","label":"40235 MD-Finance and Human Resources"}, {"value":"40236","label":"40236 MD-Financial Aid Office"}, {"value":"40237","label":"40237 MD-Financial Aid Ops"}, {"value":"40240","label":"40240 MD-Graduate Programs"}, {"value":"40241","label":"40241 MD-GPO BIMS Program"}, {"value":"40245","label":"40245 MD-Medical Education"}, {"value":"40246","label":"40246 MD-Medical Simulation"}, {"value":"40247","label":"40247 MD-Clinical Skills Center"}, {"value":"40248","label":"40248 MD-Community Based Med"}, {"value":"40249","label":"40249 MD-Generalist Scholars"}, {"value":"40250","label":"40250 MD-Clin Performance Dev"}, {"value":"40251","label":"40251 MD-Office of Int\'l Pgms"}, {"value":"40252","label":"40252 MD-Social Issues in Med"}, {"value":"40253","label":"40253 MD-Med Ed Tech"}, {"value":"40254","label":"40254 MD-Brodie Funds"}, {"value":"40255","label":"40255 MD-Med Alumni Affairs"}, {"value":"40265","label":"40265 MD-Med Ed Chief of Staff"}, {"value":"40266","label":"40266 MD-Gross Anatomy Lab"}, {"value":"40267","label":"40267 MD-Surgical Skills Lab"}, {"value":"40270","label":"40270 MD-Diversity Programs"}, {"value":"40271","label":"40271 MD-Office of Research: Institutional Research Ex"}, {"value":"40272","label":"40272 MD-Office of Innovations"}, {"value":"40275","label":"40275 MD-Research"}, {"value":"40276","label":"40276 MD-SoM Core Facilities"}, {"value":"40277","label":"40277 MD-SOM Clinical Research Office"}, {"value":"40278","label":"40278 MD-Research IT"}, {"value":"40279","label":"40279 MD-Application Developmnt"}, {"value":"40281","label":"40281 MD-Desktop Support"}, {"value":"40282","label":"40282 MD-Cont Impr"}, {"value":"40283","label":"40283 MD-Business Intelligence Program"}, {"value":"40284","label":"40284 MD-Information Technology"}, {"value":"40285","label":"40285 MD-Stud Acad Support"}, {"value":"40286","label":"40286 MD-Certificate Program"}, {"value":"40287","label":"40287 MD-Inova Rotation"}, {"value":"40290","label":"40290 MD-Student Affairs"}, {"value":"40295","label":"40295 MD-VA Medical Ctr"}, {"value":"40296","label":"40296 MD-Ctr on Health Disparities"}, {"value":"40300","label":"40300 MD-Adv Microscopy Fac"}, {"value":"40301","label":"40301 MD-ABET Core"}, {"value":"40302","label":"40302 MD-Bioinformatics Core"}, {"value":"40303","label":"40303 MD-Biomolecular Analysis"}, {"value":"40304","label":"40304 MD-Bio NMR"}, {"value":"40305","label":"40305 MD-Biorep and Tissue Resc"}, {"value":"40306","label":"40306 MD-CC Shared Resource"}, {"value":"40307","label":"40307 MD-Exercise Physiology"}, {"value":"40308","label":"40308 MD-Flow Cytometry"}, {"value":"40309","label":"40309 MD-GEMM Core"}, {"value":"40310","label":"40310 MD-Stem Cell"}, {"value":"40311","label":"40311 MD-Molecular Electron"}, {"value":"40312","label":"40312 MD-Molecular Imaging Core"}, {"value":"40313","label":"40313 MD-Molmart-Tissue Culture"}, {"value":"40314","label":"40314 MD-Research Histology"}, {"value":"40315","label":"40315 MD-GATC"}, {"value":"40316","label":"40316 MD-Radiochemistry Core"}, {"value":"40317","label":"40317 MD-GMP Core"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0mccb6x">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_av9xigk">
+        <description></description>
+        <inputEntry id="UnaryTests_gU3FL5l">
+          <text>"Emergency Medicine"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_VlDehg6">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_YgAXYJP">
+          <text>"Emergency Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0IPL0Ye">
+          <text>[{"value":"40715","label":"40715 MD-Emergency Medicine"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_16bzlom">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_kdpxlf0">
+        <description></description>
+        <inputEntry id="UnaryTests_fDlylTj">
+          <text>"Family Medicine"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_iXApvdZ">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_uIFoTeu">
+          <text>"Family Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_DIeLQXI">
+          <text>[{"value":"40720","label":"40720 MD-Family Medicine"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1u9tvyz">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_jhlweb3">
+        <description></description>
+        <inputEntry id="UnaryTests_mMG2zu4">
+          <text>"General Clinical Research Center"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_lyKrWAI">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_qxSFTeA">
+          <text>"General Clinical Research Center"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_UE99eCb">
+          <text>[{"value":"40575","label":"40575 MD-Gen Clinical Res Ctr"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_10fymv9">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_g9njs93">
+        <description></description>
+        <inputEntry id="UnaryTests_XJHLUKN">
+          <text>"Health Care Worker Safety"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_bcbeDR3">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_7hewqAO">
+          <text>"Health Care Worker Safety"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_4zr9K6Z">
+          <text>[{"value":"40585","label":"40585 MD-Health Care Wkr Safety"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1dlchwy">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_jajk1vf">
+        <description></description>
+        <inputEntry id="UnaryTests_5WmCncN">
+          <text>"Human"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_bU9x6Yp">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_oSHLmJ0">
+          <text>"Human"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_EyDdzXC">
+          <text>[{"value":"40595","label":"40595 MD-Ctr for Biomed Ethics"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0170rhi">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_z8ftg0m">
+        <description></description>
+        <inputEntry id="UnaryTests_y8UzLK2">
+          <text>"Institute of Law, Psychiatry and Public Policy"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_7FucimW">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_tHRcpgF">
+          <text>"Institute of Law, Psychiatry and Public Policy"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_RZTMGPx">
+          <text>[{"value":"40580","label":"40580 MD-Inst/Law/Psych/Public Pol"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1uwmr1d">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_6hobzr2">
+        <description></description>
+        <inputEntry id="UnaryTests_lPyajl4">
+          <text>"Internal Medicine"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_Hgecv0O">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_GdCA7s9">
+          <text>"Internal Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_NNjGPqA">
+          <text>[{"value":"40725","label":"40725 MD-Int Med, Admin"}, {"value":"40730","label":"40730 MD-Allergy"}, {"value":"40735","label":"40735 MD-CV Medicine"}, {"value":"40745","label":"40745 MD-Endocrinology"}, {"value":"40746","label":"40746 MD-Advanced Diabetes Mgt"}, {"value":"40755","label":"40755 MD-Gastroenterology"}, {"value":"40760","label":"40760 MD-Gen, Geri, Pall, Hosp"}, {"value":"40761","label":"40761 MD-Hospital Medicine"}, {"value":"40762","label":"40762 MD-Geriatrics"}, {"value":"40763","label":"40763 MD-Palliative Care"}, {"value":"40770","label":"40770 MD-Hem/Onc"}, {"value":"40771","label":"40771 MD-Community Oncology"}, {"value":"40775","label":"40775 MD-Infectious Dis"}, {"value":"40780","label":"40780 MD-Nephrology"}, {"value":"40781","label":"40781 MD-Lynchburg Comm Nephrology"}, {"value":"40785","label":"40785 MD-Pulmonary"}, {"value":"40790","label":"40790 MD-Rheumatology"}, {"value":"40795","label":"40795 MD-Ctr Inflammation Reg"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1s8zrqe">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_xqn81tn">
+        <description></description>
+        <inputEntry id="UnaryTests_djqO0bD">
+          <text>"Microbiology, Immunology, and Cancer Biology"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_TzfhPIc">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_hDNMhBG">
+          <text>"Microbiology, Immunology, and Cancer Biology"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_cfUdUrF">
+          <text>[{"value":"40445","label":"40445 MD-Microbiology"}, {"value":"40605","label":"40605 MD-Thaler Ctr"}, {"value":"40606","label":"40606 MD-Cell Clearance Center"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_04zai5e">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_cnknvid">
+        <description></description>
+        <inputEntry id="UnaryTests_HzHwxnw">
+          <text>"Molecular Physiology &amp; Biological Physics"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_Jdoc5Hb">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_9uu6qH0">
+          <text>"Molecular Physiology &amp; Biological Physics"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0hgZxdy">
+          <text>[{"value":"40040","label":"40040 MD-Mellon Prostate Cancer Ins"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0qo61ru">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_in5uo2g">
+        <description></description>
+        <inputEntry id="UnaryTests_IJICTnG">
+          <text>"Neurosurgery"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_mDy9Gcp">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_UkMI47S">
+          <text>"Neurosurgery"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_nbJ0Arl">
+          <text>[{"value":"40800","label":"40800 MD-Admin"}, {"value":"40801","label":"40801 MD-Community Division"}, {"value":"40805","label":"40805 MD-Cont Admin"}, {"value":"40806","label":"40806 MD-Radiosurgery"}, {"value":"40807","label":"40807 MD-Minimally Invasive Neurosurgery"}, {"value":"40810","label":"40810 MD-Pediatric"}, {"value":"40815","label":"40815 MD-Adult"}, {"value":"40816","label":"40816 MD-Minimally Invasive Spine"}, {"value":"40820","label":"40820 MD-CV Disease"}, {"value":"40825","label":"40825 MD-Neuro-Onc"}, {"value":"40830","label":"40830 MD-Deg Spinal Dis"}, {"value":"40835","label":"40835 MD-Gamma Knife"}, {"value":"40840","label":"40840 MD-Multiple Neuralgia"}, {"value":"40845","label":"40845 MD-Neuro-Oncology Ctr"}, {"value":"40846","label":"40846 MD-Neuroendocrine"}, {"value":"40847","label":"40847 MD-Research Lab"}, {"value":"40848","label":"40848 MD-Resident Teaching"}, {"value":"40849","label":"40849 MD-Pediatric Pituitary"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1cv1cqq">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_jnhbn10">
+        <description></description>
+        <inputEntry id="UnaryTests_uxFV6TG">
+          <text>"Neuroscience"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_VMvjgXw">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_lc9U3kQ">
+          <text>"Neuroscience"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_rriaOKq">
+          <text>[{"value":"40455","label":"40455 MD-Neuroscience"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1kxu1cv">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_tiaaodk">
+        <description></description>
+        <inputEntry id="UnaryTests_nxfeT63">
+          <text>"Neurology"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_LThcTDS">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_MOdUwra">
+          <text>"Neurology"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_cyXKqoG">
+          <text>[{"value":"40565","label":"40565 MD-Ctr/Neurodeg Dis"}, {"value":"40850","label":"40850 MD-Neurology"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_19junz2">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_2qlwb5p">
+        <description></description>
+        <inputEntry id="UnaryTests_O53R8n8">
+          <text>"Obstetrics and Gynecology"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_l9yEqXF">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0sqAtST">
+          <text>"Obstetrics and Gynecology"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_QSRRTUU">
+          <text>[{"value":"40860","label":"40860 MD-Ob &amp; Gyn, Admin"}, {"value":"40865","label":"40865 MD-Gyn Oncology"}, {"value":"40870","label":"40870 MD-Maternal Fetal Med"}, {"value":"40875","label":"40875 MD-Reprod Endo/Infertility"}, {"value":"40880","label":"40880 MD-Midlife Health"}, {"value":"40885","label":"40885 MD-Northridge"}, {"value":"40890","label":"40890 MD-Primary Care Center"}, {"value":"40895","label":"40895 MD-Gyn Specialties"}, {"value":"40897","label":"40897 MD-Midwifery"}, {"value":"40898","label":"40898 MD-MIGS"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1uzp7l4">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_4whkfkf">
+        <description></description>
+        <inputEntry id="UnaryTests_uLbfHyo">
+          <text>"Ophthalmology"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_JO21dTh">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_uzmG6cf">
+          <text>"Ophthalmology"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_6tp7jrG">
+          <text>[{"value":"40900","label":"40900 MD-Ophthalmology"}, {"value":"40905","label":"40905 MD-Research CAVS"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_15paq3f">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_n1qw3ml">
+        <description></description>
+        <inputEntry id="UnaryTests_exeMl7d">
+          <text>"Orthopaedic Surgery"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_pCzc3b1">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_icDXLXj">
+          <text>"Orthopaedic Surgery"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_lZgplgh">
+          <text>[{"value":"40910","label":"40910 MD-Ortho Surg, Admin"}, {"value":"40915","label":"40915 MD-Adult Reconst"}, {"value":"40916","label":"40916 MD-Ortho Research"}, {"value":"40917","label":"40917 MD-Ortho Residents"}, {"value":"40920","label":"40920 MD-BME Services"}, {"value":"40925","label":"40925 MD-Clinic Division"}, {"value":"40930","label":"40930 MD-Foot/Ankle"}, {"value":"40931","label":"40931 MD-Ambulatory Ortho"}, {"value":"40935","label":"40935 MD-Ortho Oncology"}, {"value":"40940","label":"40940 MD-Pediatric Ortho"}, {"value":"40945","label":"40945 MD-Prosth/Orthotics"}, {"value":"40950","label":"40950 MD-Spine"}, {"value":"40955","label":"40955 MD-Sports Med"}, {"value":"40960","label":"40960 MD-Hand Surgery"}, {"value":"40961","label":"40961 MD-Trauma"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0we1ph5">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_gqz5vcw">
+        <description></description>
+        <inputEntry id="UnaryTests_GTl9st4">
+          <text>"Otolaryngology"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_ftOvfx0">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_T4GkaUA">
+          <text>"Otolaryngology"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_Sp1KguA">
+          <text>{"value":"40970","label":"40970 MD-Oto, Admin"}, {"value":"40975","label":"40975 MD-Oto, General"}, {"value":"40980","label":"40980 MD-Audiology"},</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0ak897r">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_lac3dtj">
+        <description></description>
+        <inputEntry id="UnaryTests_HdS5RMO">
+          <text>"Pathology"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_cVBxedp">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_AsKH9Uh">
+          <text>"Pathology"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_Y8QRKGT">
+          <text>[{"value":"41000","label":"41000 MD-Pathology, Admin"}, {"value":"41003","label":"41003 MD-Autopsy"}, {"value":"41005","label":"41005 MD-Surgical Path"}, {"value":"41010","label":"41010 MD-Clinical Pathology"}, {"value":"41015","label":"41015 MD-Neuropathology"}, {"value":"41017","label":"41017 MD-Research"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0482jg7">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_sinffvc">
+        <description></description>
+        <inputEntry id="UnaryTests_PdvB8X2">
+          <text>"Public Health Sciences"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_DZ3SYdR">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_BSy0Gbl">
+          <text>"Public Health Sciences"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_MKjkSbp">
+          <text>[{"value":"40415","label":"40415 MD-Public Health Sciences Admin"}, {"value":"40416","label":"40416 MD-Public Health Practice"}, {"value":"40417","label":"40417 MD-CAPR"}, {"value":"40420","label":"40420 MD-Biostat &amp; Epid"}, {"value":"40425","label":"40425 MD-Clinical Informatics"}, {"value":"40430","label":"40430 MD-Clinical Trials"}, {"value":"40435","label":"40435 MD-Health Res &amp; Outcomes Eval"}, {"value":"40440","label":"40440 MD-MS Program"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0kz0efl">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_usfqbrn">
+        <description></description>
+        <inputEntry id="UnaryTests_2egaAp4">
+          <text>"Pediatrics"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_jjj1nFE">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_GUcvPM2">
+          <text>"Pediatrics"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_ZicFMY6">
+          <text>[{"value":"41025","label":"41025 MD-Pediatrics, Admin"}, {"value":"41026","label":"41026 MD-CHRC"}, {"value":"41030","label":"41030 MD-Allergy"}, {"value":"41035","label":"41035 MD-Cardiology"}, {"value":"41040","label":"41040 MD-Critical Care"}, {"value":"41045","label":"41045 MD-Developmental"}, {"value":"41050","label":"41050 MD-Endocrinology"}, {"value":"41056","label":"41056 MD-Bariatrics"}, {"value":"41058","label":"41058 MD-Adolescent Medicine"}, {"value":"41060","label":"41060 MD-Gastroenterology"}, {"value":"41065","label":"41065 MD-General Pediatrics"}, {"value":"41070","label":"41070 MD-Genetics"}, {"value":"41075","label":"41075 MD-Hematology"}, {"value":"41080","label":"41080 MD-Immuno/Rheum"}, {"value":"41085","label":"41085 MD-Infectious Diseases"}, {"value":"41090","label":"41090 MD-Neonatology"}, {"value":"41095","label":"41095 MD-Nephrology"}, {"value":"41105","label":"41105 MD-Pulmonary"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1s7qasa">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_linkevx">
+        <description></description>
+        <inputEntry id="UnaryTests_N8CtJhB">
+          <text>"Pharmacology"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_Onciyn3">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_pqRvpJq">
+          <text>"Pharmacology"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_fQLeWZd">
+          <text>[{"value":"40460","label":"40460 MD-Pharmacology"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0ic6ngu">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_mbvqjmy">
+        <description></description>
+        <inputEntry id="UnaryTests_9tKCmEb">
+          <text>"Physical Medicine &amp; Rehabilitation"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_U7uHzCy">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_uDUu6jz">
+          <text>"Physical Medicine &amp; Rehabilitation"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_ViW4OTy">
+          <text>[{"value":"41130","label":"41130 MD-Phys Med &amp; Rehab"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_053pgs5">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_cyuwe3w">
+        <description></description>
+        <inputEntry id="UnaryTests_YJLfeBc">
+          <text>"Plastic and Maxillofacial Surgery"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_CkvLYRl">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_Ngqgp44">
+          <text>"Plastic and Maxillofacial Surgery"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_EM1xtv9">
+          <text>[{"value":"41140","label":"41140 MD-Plastic Surgery"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1x46v76">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_7xdffj1">
+        <description></description>
+        <inputEntry id="UnaryTests_8JqdbIq">
+          <text>"Psychiatry and Neurobehavioral Sciences"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_eIpUHWC">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_de84oY2">
+          <text>"Psychiatry and Neurobehavioral Sciences"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_soupzT0">
+          <text>[{"value":"41120","label":"41120 MD-Psychiatry and NB Sciences"}, {"value":"41121","label":"41121 MD-Ctr for Diabetes Tech"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_175e8pl">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_apydi73">
+        <description></description>
+        <inputEntry id="UnaryTests_oQvWHcJ">
+          <text>"Radiology and Medical Imaging"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_AdqH2FQ">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_wszHMZv">
+          <text>"Radiology and Medical Imaging"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_qlLnpNX">
+          <text>[{"value":"41160","label":"41160 MD-Radiology, Admin"}, {"value":"41161","label":"41161 MD-Community Division"}, {"value":"41165","label":"41165 MD-Angio/Interv"}, {"value":"41166","label":"41166 MD-Non-Invasive Cardio"}, {"value":"41170","label":"41170 MD-Breast Imaging"}, {"value":"41175","label":"41175 MD-Thoracoabdominal"}, {"value":"41180","label":"41180 MD-Musculoskeletal"}, {"value":"41185","label":"41185 MD-Neuroradiology"}, {"value":"41186","label":"41186 MD-Interventional Neuroradiology (INR)"}, {"value":"41190","label":"41190 MD-Nuclear Medicine"}, {"value":"41195","label":"41195 MD-Pediatric Rad"}, {"value":"41200","label":"41200 MD-Rad Research"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_06qfcb0">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_ovwpndf">
+        <description></description>
+        <inputEntry id="UnaryTests_pfdDyxA">
+          <text>"Radiation Oncology"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_Mozccas">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0i8pg0p">
+          <text>"Radiation Oncology"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_nnYLVXN">
+          <text>[{"value":"41150","label":"41150 MD-Radiation Oncology"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_14hxabi">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_rtr9vjf">
+        <description></description>
+        <inputEntry id="UnaryTests_FNQGbgl">
+          <text>"Surgery"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_NQRnhLx">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_Ht2uUif">
+          <text>"Surgery"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_wyJfKUj">
+          <text>[{"value":"41210","label":"41210 MD-Surgery, Admin"}, {"value":"41211","label":"41211 MD-Billing"}, {"value":"41212","label":"41212 MD-Education"}, {"value":"41213","label":"41213 MD-Research"}, {"value":"41215","label":"41215 MD-General Surgery"}, {"value":"41217","label":"41217 MD-Acute Care &amp; Trauma"}, {"value":"41220","label":"41220 MD-Pediatric Surgery"}, {"value":"41225","label":"41225 MD-Surg Oncology"}, {"value":"41227","label":"41227 MD-Breast &amp; Melanoma"}, {"value":"41230","label":"41230 MD-Cardiac Surgery"}, {"value":"41233","label":"41233 MD-Thoracic Surgery"}, {"value":"41235","label":"41235 MD-Transplantation"}, {"value":"41237","label":"41237 MD-Vascular Surgery"}, {"value":"41250","label":"41250 MD-Urology, Admin"}, {"value":"41255","label":"41255 MD-Urology, General"}, {"value":"41260","label":"41260 MD-Prostate Cancer Ctr"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0tp9r3y">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_2jsyhye">
+        <description></description>
+        <inputEntry id="UnaryTests_li2DnpH">
+          <text>"Translational Health Research Institute of VA"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_NsPUvY2">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_HoKZeib">
+          <text>"Translational Health Research Institute of VA"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0kmgyeJ">
+          <text>[{"value":"40576","label":"40576 MD-Trans Hlth Res Inst Va"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0dgills">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_ki18syp">
+        <description></description>
+        <inputEntry id="UnaryTests_34ofY7V">
+          <text>"Urology"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_9ihCjM8">
+          <text>"School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_V2wiOaI">
+          <text>"Urology"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_AbMZ9kq">
+          <text>[{"value":"40555","label":"40555 MD-Ctr/Child Renal/Uro Dis"}]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_08vftp7">
+          <text></text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

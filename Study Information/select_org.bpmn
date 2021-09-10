@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1mycrzg" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.5.0">
+  <bpmn:process id="Process_select_org" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>SequenceFlow_09p51su</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_09p51su" sourceRef="StartEvent_1" targetRef="ScriptTask_055pzux" />
+    <bpmn:scriptTask id="ScriptTask_055pzux" name="Parse Org Info">
+      <bpmn:incoming>SequenceFlow_09p51su</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0u1u8l9</bpmn:outgoing>
+      <bpmn:script>if org_source == "ldap" or org_source == "ldap_e0":
+	length_ldap_org = len(ldap_org)
+	e0_start = ldap_org.find("E0:") + 3
+	e0_org = ldap_org[e0_start:length_ldap_org]
+	e0_first_hyphen = e0_org.find("-")
+	e0_first_comma = e0_org.find(",")
+	if e0_first_comma &gt; 0:
+		e0_org = e0_org[:e0_first_comma-1]
+	e0_dept_start = e0_first_hyphen + 1
+	e0_schoolAbbrv = e0_org[0:e0_first_hyphen]
+	isSpace = " " in e0_org
+	if isSpace:
+		e0_first_space = e0_org.find(" ")
+		e0_spec_start = e0_first_space + 1
+		e0_spec_end = len(e0_org)
+		e0_deptAbbrv = e0_org[e0_dept_start:e0_first_space]
+		e0_specName = e0_org[e0_spec_start:e0_spec_end]
+	else:
+		e0_specName = ""
+	org_name = e0_org
+	org_name_source = "e0"
+elif org_source == "none":
+	org_name = "Schools"
+elif org_source == "school":
+	if org_name_source == "e0":
+	    org_name = e0_schoolAbbrv
+elif org_source == "department":
+	org_name = e0_deptAbbrv
+else:
+	org_name = "Schools"</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:endEvent id="EndEvent_01vkwbp">
+      <bpmn:documentation>test</bpmn:documentation>
+      <bpmn:incoming>SequenceFlow_0t7eawo</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0pasll9</bpmn:incoming>
+      <bpmn:incoming>Flow_0dwjw56</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0u1u8l9" sourceRef="ScriptTask_055pzux" targetRef="ExclusiveGateway_0de1leb" />
+    <bpmn:exclusiveGateway id="ExclusiveGateway_0de1leb" name="Org Source None?" default="SequenceFlow_0vbaq1v">
+      <bpmn:incoming>SequenceFlow_0u1u8l9</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_05a6n5p</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_0vbaq1v</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_05a6n5p" sourceRef="ExclusiveGateway_0de1leb" targetRef="Task_1ykcxai">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">org_source == "none"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_1xd5pdc" sourceRef="Task_1ykcxai" targetRef="Task_0hv1afk" />
+    <bpmn:callActivity id="Task_1ykcxai" name="Call Pick School" calledElement="Process_find_org">
+      <bpmn:incoming>SequenceFlow_05a6n5p</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1xd5pdc</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_1nr8lgk" name="Org Source School?" default="SequenceFlow_1j56rgw">
+      <bpmn:incoming>SequenceFlow_0vbaq1v</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_15hvuaz</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0twskc7</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_1j56rgw</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_0twskc7" name="Yes" sourceRef="ExclusiveGateway_1nr8lgk" targetRef="Task_19stsvt">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">org_source == "school"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:callActivity id="Task_19stsvt" name="Call Pick Department" calledElement="Process_find_org">
+      <bpmn:incoming>SequenceFlow_0twskc7</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0y0welo</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_1ge0zd0" name="Org Source Speciality?" default="SequenceFlow_0k1x6s5">
+      <bpmn:incoming>Flow_0d31hrl</bpmn:incoming>
+      <bpmn:incoming>Flow_09304nd</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1r92g9m</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_0k1x6s5</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_0y0welo" sourceRef="Task_19stsvt" targetRef="Task_1fs31ks" />
+    <bpmn:sequenceFlow id="SequenceFlow_1r92g9m" name="Yes" sourceRef="ExclusiveGateway_1ge0zd0" targetRef="Task_1dgxam3">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">org_source == "speciality" or org_source == "ldap"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:callActivity id="Task_1dgxam3" name="Call Pick Variation" calledElement="Process_find_org">
+      <bpmn:incoming>SequenceFlow_1r92g9m</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0pasll9</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:sequenceFlow id="SequenceFlow_0pasll9" sourceRef="Task_1dgxam3" targetRef="EndEvent_01vkwbp" />
+    <bpmn:sequenceFlow id="SequenceFlow_15hvuaz" sourceRef="Task_0hv1afk" targetRef="ExclusiveGateway_1nr8lgk" />
+    <bpmn:scriptTask id="Task_0hv1afk" name="Set School as Source">
+      <bpmn:incoming>SequenceFlow_1xd5pdc</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_15hvuaz</bpmn:outgoing>
+      <bpmn:script>if org_name_source == 'find':
+    if len(enum_variations) &gt; 1:
+        org_name = Variation.label
+    else:
+        org_name = enum_variations[0]["label"]
+else:
+    org_name = pass_in_org_name
+
+org_source = "school"</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1yqs9bk" sourceRef="Task_1fs31ks" targetRef="Gateway_129tj4e" />
+    <bpmn:scriptTask id="Task_1fs31ks" name="Set Department as Source">
+      <bpmn:incoming>SequenceFlow_0y0welo</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1yqs9bk</bpmn:outgoing>
+      <bpmn:script>if org_name_source == 'find':
+    if len(enum_variations) &gt; 1:
+        org_name = Variation.value
+    else:
+        org_name = enum_variations[0]["value"]
+else:
+    org_name = pass_in_org_name
+    
+org_source = "department"</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0vbaq1v" name="No" sourceRef="ExclusiveGateway_0de1leb" targetRef="ExclusiveGateway_1nr8lgk" />
+    <bpmn:sequenceFlow id="SequenceFlow_1j56rgw" name="No" sourceRef="ExclusiveGateway_1nr8lgk" targetRef="Gateway_129tj4e" />
+    <bpmn:manualTask id="Task_025umti" name="Show Oops">
+      <bpmn:documentation>Oops, not sure what to do.</bpmn:documentation>
+      <bpmn:incoming>Flow_0cu1hvj</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0t7eawo</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0k1x6s5" name="No" sourceRef="ExclusiveGateway_1ge0zd0" targetRef="Gateway_0fzk8t2" />
+    <bpmn:sequenceFlow id="SequenceFlow_0t7eawo" sourceRef="Task_025umti" targetRef="EndEvent_01vkwbp" />
+    <bpmn:exclusiveGateway id="Gateway_129tj4e" name="Org Source Department?" default="Flow_09304nd">
+      <bpmn:incoming>SequenceFlow_1j56rgw</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1yqs9bk</bpmn:incoming>
+      <bpmn:outgoing>Flow_1aey6m3</bpmn:outgoing>
+      <bpmn:outgoing>Flow_09304nd</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1aey6m3" sourceRef="Gateway_129tj4e" targetRef="Activity_17kowu6">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">org_source == "department"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_12u7yz6" sourceRef="Activity_17kowu6" targetRef="Activity_13vu5n5" />
+    <bpmn:callActivity id="Activity_17kowu6" name="Call Pick Speciality" calledElement="Process_find_org">
+      <bpmn:incoming>Flow_1aey6m3</bpmn:incoming>
+      <bpmn:outgoing>Flow_12u7yz6</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:sequenceFlow id="Flow_0d31hrl" sourceRef="Activity_13vu5n5" targetRef="ExclusiveGateway_1ge0zd0" />
+    <bpmn:scriptTask id="Activity_13vu5n5" name="Set Speciality as Source">
+      <bpmn:incoming>Flow_12u7yz6</bpmn:incoming>
+      <bpmn:outgoing>Flow_0d31hrl</bpmn:outgoing>
+      <bpmn:script>if org_name_source == 'find':
+    if len(enum_variations) &gt; 1:
+        org_name = Variation.value
+    else:
+        org_name = enum_variations[0]["value"]
+elif org_name_source == 'e0':
+    org_name = e0_specName
+else:
+    org_name = pass_in_org_name
+    
+org_source = "speciality"</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_09304nd" name="No" sourceRef="Gateway_129tj4e" targetRef="ExclusiveGateway_1ge0zd0" />
+    <bpmn:exclusiveGateway id="Gateway_0fzk8t2" default="Flow_0cu1hvj">
+      <bpmn:incoming>SequenceFlow_0k1x6s5</bpmn:incoming>
+      <bpmn:outgoing>Flow_0cu1hvj</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0dwjw56</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0cu1hvj" sourceRef="Gateway_0fzk8t2" targetRef="Task_025umti" />
+    <bpmn:sequenceFlow id="Flow_0dwjw56" sourceRef="Gateway_0fzk8t2" targetRef="EndEvent_01vkwbp">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">org_source == "ldap_e0"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_select_org">
+      <bpmndi:BPMNEdge id="Flow_0dwjw56_di" bpmnElement="Flow_0dwjw56">
+        <di:waypoint x="1905" y="370" />
+        <di:waypoint x="2250" y="370" />
+        <di:waypoint x="2250" y="265" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0cu1hvj_di" bpmnElement="Flow_0cu1hvj">
+        <di:waypoint x="1880" y="395" />
+        <di:waypoint x="1880" y="500" />
+        <di:waypoint x="2000" y="500" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09304nd_di" bpmnElement="Flow_09304nd">
+        <di:waypoint x="1370" y="222" />
+        <di:waypoint x="1370" y="140" />
+        <di:waypoint x="1880" y="140" />
+        <di:waypoint x="1880" y="222" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1618" y="122" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0d31hrl_di" bpmnElement="Flow_0d31hrl">
+        <di:waypoint x="1750" y="247" />
+        <di:waypoint x="1855" y="247" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12u7yz6_di" bpmnElement="Flow_12u7yz6">
+        <di:waypoint x="1570" y="247" />
+        <di:waypoint x="1650" y="247" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1aey6m3_di" bpmnElement="Flow_1aey6m3">
+        <di:waypoint x="1395" y="247" />
+        <di:waypoint x="1470" y="247" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0t7eawo_di" bpmnElement="SequenceFlow_0t7eawo">
+        <di:waypoint x="2100" y="500" />
+        <di:waypoint x="2250" y="500" />
+        <di:waypoint x="2250" y="265" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0k1x6s5_di" bpmnElement="SequenceFlow_0k1x6s5">
+        <di:waypoint x="1880" y="272" />
+        <di:waypoint x="1880" y="345" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1892" y="286" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1j56rgw_di" bpmnElement="SequenceFlow_1j56rgw">
+        <di:waypoint x="900" y="272" />
+        <di:waypoint x="900" y="340" />
+        <di:waypoint x="1370" y="340" />
+        <di:waypoint x="1370" y="272" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1162" y="322" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0vbaq1v_di" bpmnElement="SequenceFlow_0vbaq1v">
+        <di:waypoint x="460" y="222" />
+        <di:waypoint x="460" y="170" />
+        <di:waypoint x="900" y="170" />
+        <di:waypoint x="900" y="222" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="678" y="152" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1yqs9bk_di" bpmnElement="SequenceFlow_1yqs9bk">
+        <di:waypoint x="1270" y="247" />
+        <di:waypoint x="1345" y="247" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_15hvuaz_di" bpmnElement="SequenceFlow_15hvuaz">
+        <di:waypoint x="810" y="247" />
+        <di:waypoint x="875" y="247" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0pasll9_di" bpmnElement="SequenceFlow_0pasll9">
+        <di:waypoint x="2110" y="247" />
+        <di:waypoint x="2232" y="247" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1r92g9m_di" bpmnElement="SequenceFlow_1r92g9m">
+        <di:waypoint x="1905" y="247" />
+        <di:waypoint x="2010" y="247" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1949" y="229" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0y0welo_di" bpmnElement="SequenceFlow_0y0welo">
+        <di:waypoint x="1100" y="247" />
+        <di:waypoint x="1170" y="247" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0twskc7_di" bpmnElement="SequenceFlow_0twskc7">
+        <di:waypoint x="925" y="247" />
+        <di:waypoint x="1000" y="247" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="954" y="229" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1xd5pdc_di" bpmnElement="SequenceFlow_1xd5pdc">
+        <di:waypoint x="640" y="247" />
+        <di:waypoint x="710" y="247" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_05a6n5p_di" bpmnElement="SequenceFlow_05a6n5p">
+        <di:waypoint x="485" y="247" />
+        <di:waypoint x="540" y="247" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0u1u8l9_di" bpmnElement="SequenceFlow_0u1u8l9">
+        <di:waypoint x="380" y="247" />
+        <di:waypoint x="435" y="247" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_09p51su_di" bpmnElement="SequenceFlow_09p51su">
+        <di:waypoint x="188" y="247" />
+        <di:waypoint x="280" y="247" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="229" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ScriptTask_055pzux_di" bpmnElement="ScriptTask_055pzux">
+        <dc:Bounds x="280" y="207" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_01vkwbp_di" bpmnElement="EndEvent_01vkwbp">
+        <dc:Bounds x="2232" y="229" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_0de1leb_di" bpmnElement="ExclusiveGateway_0de1leb" isMarkerVisible="true">
+        <dc:Bounds x="435" y="222" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="432" y="279" width="57" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CallActivity_0h9ip2v_di" bpmnElement="Task_1ykcxai">
+        <dc:Bounds x="540" y="207" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_1nr8lgk_di" bpmnElement="ExclusiveGateway_1nr8lgk" isMarkerVisible="true">
+        <dc:Bounds x="875" y="222" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="831" y="266" width="57" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CallActivity_0uq3pe1_di" bpmnElement="Task_19stsvt">
+        <dc:Bounds x="1000" y="207" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_1ge0zd0_di" bpmnElement="ExclusiveGateway_1ge0zd0" isMarkerVisible="true">
+        <dc:Bounds x="1855" y="222" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1803" y="266" width="57" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CallActivity_13o4vku_di" bpmnElement="Task_1dgxam3">
+        <dc:Bounds x="2010" y="207" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ScriptTask_0leagzi_di" bpmnElement="Task_0hv1afk">
+        <dc:Bounds x="710" y="207" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ScriptTask_1cjk85j_di" bpmnElement="Task_1fs31ks">
+        <dc:Bounds x="1170" y="207" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ManualTask_1f3iv2z_di" bpmnElement="Task_025umti">
+        <dc:Bounds x="2000" y="460" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_129tj4e_di" bpmnElement="Gateway_129tj4e" isMarkerVisible="true">
+        <dc:Bounds x="1345" y="222" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1288" y="266" width="64" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0b1aq3w_di" bpmnElement="Activity_17kowu6">
+        <dc:Bounds x="1470" y="207" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_00eavnr_di" bpmnElement="Activity_13vu5n5">
+        <dc:Bounds x="1650" y="207" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0fzk8t2_di" bpmnElement="Gateway_0fzk8t2" isMarkerVisible="true">
+        <dc:Bounds x="1855" y="345" width="50" height="50" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
