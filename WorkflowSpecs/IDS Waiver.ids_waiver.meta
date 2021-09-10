@@ -1,0 +1,1 @@
+{'id': 'ids_waiver', 'display_name': 'IDS Waiver', 'description': 'Request Investigational Drug Service Waiver', 'is_master_spec': False, 'category_id': 3, 'display_order': 6, 'standalone': False, 'library': False}

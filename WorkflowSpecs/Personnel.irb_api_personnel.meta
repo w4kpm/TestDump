@@ -1,0 +1,1 @@
+{'id': 'irb_api_personnel', 'display_name': 'Personnel', 'description': 'Edit Personnel entered in Protocol Builder information.', 'is_master_spec': False, 'category_id': 1, 'display_order': 0, 'standalone': False, 'library': False}

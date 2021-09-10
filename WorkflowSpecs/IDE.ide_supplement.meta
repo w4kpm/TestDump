@@ -1,0 +1,1 @@
+{'id': 'ide_supplement', 'display_name': 'IDE', 'description': 'Supplemental information for the IDE number entered in Protocol Builder', 'is_master_spec': False, 'category_id': 1, 'display_order': 3, 'standalone': False, 'library': False}

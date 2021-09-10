@@ -1,0 +1,1 @@
+{'id': 'top_level_workflow', 'display_name': 'Top Level Workflow', 'description': 'Determines the status of other workflows in a study', 'is_master_spec': True, 'category_id': None, 'display_order': None, 'standalone': False, 'library': False}
