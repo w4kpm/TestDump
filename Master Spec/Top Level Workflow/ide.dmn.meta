@@ -1,1 +1,0 @@
-{'id': 100, 'md5_hash': UUID('11b92e78-8bb1-8f3e-1784-57a70d2d7a7e'), 'version': 1, 'size': 2042, 'date_created': datetime.datetime(2021, 8, 17, 14, 44, 34, 769754, tzinfo=datetime.timezone.utc), 'file_model_id': 100, 'file_model': <FileModel 100>, 'user_uid': None}
