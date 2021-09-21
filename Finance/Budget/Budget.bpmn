@@ -25,7 +25,7 @@
     <bpmn:sequenceFlow id="Flow_1ryj6w8" sourceRef="Activity_14ixss6" targetRef="Activity_1jhw535" />
     <bpmn:sequenceFlow id="Flow_1d91dci" sourceRef="StartEvent_1" targetRef="Activity_14ixss6" />
     <bpmn:sequenceFlow id="Flow_1bvooih" sourceRef="Activity_1jhw535" targetRef="Activity_19khp0i" />
-    <bpmn:userTask id="Activity_1jhw535" name="Enter Final Budget" camunda:formKey="BudgetUploadFianl">
+    <bpmn:userTask id="Activity_1jhw535" name="Enter Final Budget - with a new name" camunda:formKey="BudgetUploadFianl">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="Finance_Budget_Final" label="Final Budget 1" type="file" />
@@ -40,7 +40,7 @@
       <bpmn:outgoing>Flow_0oili97</bpmn:outgoing>
       <bpmn:script># Load IRB Documents
 documents = study_info('documents')
-
+print('hello world')
 # Budget docs
 budget_docs = {key: value for key, value in documents.items() if value.workflow == 'Budget'}
 	
@@ -54,9 +54,7 @@ del(documents)	</bpmn:script>
         <di:waypoint x="1202" y="206" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1bvooih_di" bpmnElement="Flow_1bvooih">
-        <di:waypoint x="1000" y="260" />
-        <di:waypoint x="1025" y="260" />
-        <di:waypoint x="1025" y="206" />
+        <di:waypoint x="1000" y="206" />
         <di:waypoint x="1050" y="206" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1d91dci_di" bpmnElement="Flow_1d91dci">
@@ -65,9 +63,7 @@ del(documents)	</bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1ryj6w8_di" bpmnElement="Flow_1ryj6w8">
         <di:waypoint x="800" y="206" />
-        <di:waypoint x="850" y="206" />
-        <di:waypoint x="850" y="260" />
-        <di:waypoint x="900" y="260" />
+        <di:waypoint x="900" y="206" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="592" y="188" width="36" height="36" />
@@ -82,7 +78,7 @@ del(documents)	</bpmn:script>
         <dc:Bounds x="1050" y="166" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_051guls_di" bpmnElement="Activity_1jhw535">
-        <dc:Bounds x="900" y="220" width="100" height="80" />
+        <dc:Bounds x="900" y="166" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
