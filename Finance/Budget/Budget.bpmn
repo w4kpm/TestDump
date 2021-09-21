@@ -25,7 +25,7 @@
     <bpmn:sequenceFlow id="Flow_1ryj6w8" sourceRef="Activity_14ixss6" targetRef="Activity_1jhw535" />
     <bpmn:sequenceFlow id="Flow_1d91dci" sourceRef="StartEvent_1" targetRef="Activity_14ixss6" />
     <bpmn:sequenceFlow id="Flow_1bvooih" sourceRef="Activity_1jhw535" targetRef="Activity_19khp0i" />
-    <bpmn:userTask id="Activity_1jhw535" name="Enter Final Budget" camunda:formKey="BudgetUploadFianl">
+    <bpmn:userTask id="Activity_1jhw535" name="Enter Final Budget - with a new name" camunda:formKey="BudgetUploadFianl">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="Finance_Budget_Final" label="Final Budget 1" type="file" />
@@ -40,7 +40,7 @@
       <bpmn:outgoing>Flow_0oili97</bpmn:outgoing>
       <bpmn:script># Load IRB Documents
 documents = study_info('documents')
-
+print('hello world')
 # Budget docs
 budget_docs = {key: value for key, value in documents.items() if value.workflow == 'Budget'}
 	
@@ -49,25 +49,24 @@ del(documents)	</bpmn:script>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1e4920c">
+      <bpmndi:BPMNEdge id="Flow_0oili97_di" bpmnElement="Flow_0oili97">
+        <di:waypoint x="1150" y="206" />
+        <di:waypoint x="1202" y="206" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1bvooih_di" bpmnElement="Flow_1bvooih">
         <di:waypoint x="1000" y="206" />
         <di:waypoint x="1050" y="206" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1d91dci_di" bpmnElement="Flow_1d91dci">
-        <di:waypoint x="628" y="206" />
+        <di:waypoint x="288" y="390" />
+        <di:waypoint x="484" y="390" />
+        <di:waypoint x="484" y="206" />
         <di:waypoint x="700" y="206" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1ryj6w8_di" bpmnElement="Flow_1ryj6w8">
         <di:waypoint x="800" y="206" />
         <di:waypoint x="900" y="206" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0oili97_di" bpmnElement="Flow_0oili97">
-        <di:waypoint x="1150" y="206" />
-        <di:waypoint x="1202" y="206" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="592" y="188" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_14ixss6_di" bpmnElement="Activity_14ixss6">
         <dc:Bounds x="700" y="166" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -79,6 +78,9 @@ del(documents)	</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0rtu4il_di" bpmnElement="Activity_19khp0i">
         <dc:Bounds x="1050" y="166" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="252" y="372" width="36" height="36" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
