@@ -58,27 +58,29 @@ del(documents)	</bpmn:script>
         <di:waypoint x="1050" y="206" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1d91dci_di" bpmnElement="Flow_1d91dci">
-        <di:waypoint x="628" y="206" />
+        <di:waypoint x="288" y="390" />
+        <di:waypoint x="484" y="390" />
+        <di:waypoint x="484" y="206" />
         <di:waypoint x="700" y="206" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1ryj6w8_di" bpmnElement="Flow_1ryj6w8">
         <di:waypoint x="800" y="206" />
         <di:waypoint x="900" y="206" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="592" y="188" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_14ixss6_di" bpmnElement="Activity_14ixss6">
         <dc:Bounds x="700" y="166" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_19f3rl3_di" bpmnElement="Event_19f3rl3">
         <dc:Bounds x="1202" y="188" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_051guls_di" bpmnElement="Activity_1jhw535">
+        <dc:Bounds x="900" y="166" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0rtu4il_di" bpmnElement="Activity_19khp0i">
         <dc:Bounds x="1050" y="166" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_051guls_di" bpmnElement="Activity_1jhw535">
-        <dc:Bounds x="900" y="166" width="100" height="80" />
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="252" y="372" width="36" height="36" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
