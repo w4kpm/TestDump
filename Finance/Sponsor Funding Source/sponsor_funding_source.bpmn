@@ -19,6 +19,7 @@
               <camunda:property id="spreadsheet.name" value="SponsorList.xls" />
               <camunda:property id="spreadsheet.value.column" value="CUSTOMER_NUMBER" />
               <camunda:property id="spreadsheet.label.column" value="CUSTOMER_NAME" />
+              <camunda:property id="autocomplete_num" value="15" />
             </camunda:properties>
           </camunda:formField>
           <camunda:formField id="SponsorType" label="Select all that apply:" type="enum">
@@ -97,9 +98,6 @@
         <di:waypoint x="178" y="197" />
         <di:waypoint x="235" y="197" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="142" y="179" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="UserTask_15oiwqt_di" bpmnElement="Task_14cuhvm">
         <dc:Bounds x="330" y="80" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -114,6 +112,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1kowkjp_di" bpmnElement="Gateway_1924s77">
         <dc:Bounds x="475" y="172" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="142" y="179" width="36" height="36" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
