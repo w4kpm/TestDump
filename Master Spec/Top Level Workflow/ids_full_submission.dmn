@@ -6,7 +6,7 @@
     </extensionElements>
     <decisionTable id="decisionTable_1">
       <input id="input_1" label="IRB API IDS Waiver Status">
-        <inputExpression id="inputExpression_1" typeRef="string">
+        <inputExpression id="inputExpression_1" typeRef="boolean">
           <text>documents.UVACompl_IDSWaiverApp.required</text>
         </inputExpression>
       </input>
@@ -14,19 +14,19 @@
       <rule id="DecisionRule_0rj79pz">
         <description>IDS Full Submission hidden</description>
         <inputEntry id="UnaryTests_1w0ydbs">
-          <text>"true"</text>
+          <text>True</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_10u5hnp">
-          <text>"required"</text>
+          <text>"hidden"</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_1eyx8lf">
         <description>IDS Full Submission required</description>
         <inputEntry id="UnaryTests_02h1s2m">
-          <text>"false"</text>
+          <text>False</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_0kdhxz2">
-          <text>"hidden"</text>
+          <text>"required"</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_1ds7sa4">
