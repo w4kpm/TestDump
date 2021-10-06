@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/1.0" id="Definitions_f5698d0" name="DRD" namespace="http://camunda.org/schema/1.0/dmn">
+  <decision id="test" name="Test">
+    <extensionElements>
+      <biodi:bounds x="157" y="81" width="180" height="80" />
+    </extensionElements>
+    <decisionTable id="decisionTable_1">
+      <input id="input_1" label="Pick One Input">
+        <inputExpression id="inputExpression_1" typeRef="string">
+          <text>PickOne.value</text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="PI Pick One" name="pi.PI.PickOne" typeRef="boolean" />
+      <rule id="DecisionRule_0585adm">
+        <inputEntry id="UnaryTests_1py23yl">
+          <text>"yes"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_02v8toa">
+          <text>True</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0e0bsgq">
+        <inputEntry id="UnaryTests_06ds13q">
+          <text>"no"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_07dyy0x">
+          <text>False</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/1.0" id="Definitions_347a7cd" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="3.5.0">
+  <decision id="org_info" name="Org Info">
+    <extensionElements>
+      <biodi:bounds x="440" y="230" width="180" height="80" />
+    </extensionElements>
+    <decisionTable id="decisionTable_1">
+      <input id="input_1" label="Org Name">
+        <inputExpression id="inputExpression_1" typeRef="string">
+          <text>org_name</text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="Master Org Code" name="MstrOrgCode" typeRef="string" />
+      <output id="OutputClause_1vmpzi8" label="Department Name" name="DeptName" typeRef="string" />
+      <output id="OutputClause_1unw8za" label="School Name" name="SchlName" typeRef="string" />
+      <output id="OutputClause_12mfl9k" label="Org Variations" name="enum_variations" typeRef="string" />
+      <rule id="DecisionRule_1esn74d">
+        <inputEntry id="UnaryTests_0u1hzyv">
+          <text>"Schools"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_157et9e">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1s017nb">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0fgb1m4">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1b0ji52">
+          <text>[{"value":"AS", "label":"Arts and Sciences"}, {"value":"CU", "label":"Education"}, {"value":"EN", "label":"Engineering"}, {"value":"MD", "label":"Medicine"}, {"value":"NR", "label":"Nursing"}]</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1hprls9">
+        <inputEntry id="UnaryTests_1o2p1qy">
+          <text>"MD"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0r1o2bo">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0oiua4y">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_16w597x">
+          <text>"MD-School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1la01yw">
+          <text>[{"value":"INMD", "label":"Internal Medicine"}, {"value":"NEUR", "label":"Neurology"}, {"value":"OBGY", "label":"Ob &amp; Gyn"}, {"value":"PEDT", "label":"Pediatrics"}]</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0qt1gj7">
+        <inputEntry id="UnaryTests_0wq1kkq">
+          <text>"NEUR"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1vtv2st">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0uxm81m">
+          <text>"MD-NEUR Neurology"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_12jxbmb">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1crj8sd">
+          <text>[{"value":"MD-NEUR Neurology", "label":"Neurology"}]</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1dbcqhr">
+        <inputEntry id="UnaryTests_0yhjas6">
+          <text>"OBGY"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0zgsdy8">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_174xph6">
+          <text>"MD-OBGY Ob &amp; Gyn"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_08qd0if">
+          <text>"MD-School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1w64kpr">
+          <text>[{"value":"MD-OBGY Gyn Oncology", "label":"Gyn Oncology"}, {"value":"MD-OBGY Maternal Fetal Med", "label":"Maternal Fetal Med"}]</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0pptriy">
+        <inputEntry id="UnaryTests_0urm3qk">
+          <text>"MD-INMD Infectious Dis"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_09qyzo9">
+          <text>"40775"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_059y2o9">
+          <text>"MD-INMD Internal Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1ewh48x">
+          <text>"MD-School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0nzq1a1">
+          <text>[{"value":"40775-CAW", "label":"40775 MD-INMD Infectious Dis-CAW"}, {"value":"40775-ERH", "label":"40775 MD-INMD Infectious Dis-ERH"}, {"value":"40775-PEJ", "label":"40775 MD-INMD Infectious Dis-PEJ"}, {"value":"40775-RAD", "label":"40775 MD-INMD Infectious Dis-RAD"}, {"value":"40775-WAP", "label":"40775 MD-INMD Infectious Dis-WAP"}]</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0wcw1ca">
+        <inputEntry id="UnaryTests_0rsfhp8">
+          <text>"MD-NEUR Neurology"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_08j7djx">
+          <text>"40850"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1ylax8a">
+          <text>"MD-NEUR Neurology"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1s6x7b5">
+          <text>"MD-School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1d5evqe">
+          <text>[{"value":"40850", "label":"40850 MD-NEUR Neurology"}, {"value":"40850-BI", "label":"40850 MD-NEUR Neurology-Brain Institute"}, {"value":"40850-MEM", "label":"40850 MD-NEUR Neurology-Memory"}, {"value":"40850-MD", "label":"40850 MD-NEUR Neurology-Movement Disorders"}, {"value":"40850-MS", "label":"40850 MD-NEUR Neurology-MS"}, {"value":"40850-NM", "label":"40850 MD-NEUR Neurology-Neuromuscular"}, {"value":"40850-NN", "label":"40850 MD-NEUR Neurology-NeuroNEXT"}, {"value":"40850-OCR", "label":"40850 MD-NEUR Neurology-OCR"}, {"value":"40850-PDT", "label":"40850 MD-NEUR Neurology-PDT"}, {"value":"40850-STOKE", "label":"40850 MD-NEUR Neurology-Stroke"}]</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1ltuvyv">
+        <inputEntry id="UnaryTests_1xirtab">
+          <text>"MD-OBGY Gyn Oncology"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1xawsuf">
+          <text>"40865"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1euwbrf">
+          <text>"MD-OBGY Ob &amp; Gyn"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0x7mlgf">
+          <text>"MD-School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1hzf47t">
+          <text>[{"value":"40865-MID", "label":"40865 MD-OBGY Midlife Health-MID"}, {"value":"40865-OBGY", "label":"40865 MD-OBGY Gyn Oncology-OBGY"}, {"value":"40865-OCR", "label":"40865 MD-OBGY Gyn Oncology-OCR"}, {"value":"40865-PDT", "label":"40865 MD-OBGY Gyn Oncology-PDT"}, {"value":"40865", "label":"40865 MD-OBGY Urogynecology"}]</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0jyxk4v">
+        <inputEntry id="UnaryTests_0z7f8dz">
+          <text>"MD-OBGY Maternal Fetal Med"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_01tmdjq">
+          <text>"40870"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1n5t7hk">
+          <text>"MD-OBGY Ob &amp; Gyn"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_17opi50">
+          <text>"MD-School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_08wl1g7">
+          <text>[{"value":"40870", "label":"40870 MD-OBGY Maternal Fetal Med"}]</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_06oau4j">
+        <inputEntry id="UnaryTests_14pvbw7">
+          <text>"MD-PEDT Pediatrics, Admin"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0dr87fo">
+          <text>"41025"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0yqkhgf">
+          <text>"MD-PEDT Pediatrics"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_10nt4uf">
+          <text>"MD-School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1rcryg2">
+          <text>[{"value":"41025", "label":"41025 MD-PEDT Pediatrics, Admin"}]</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0fp0wcz">
+        <inputEntry id="UnaryTests_05fqbpk">
+          <text>"MD-PEDT Pediatrics"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_17rw3zz">
+          <text>"41090"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_19ejha3">
+          <text>"MD-PEDT Pediatrics"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1su4bl2">
+          <text>"MD-School of Medicine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0oi0qb0">
+          <text>[{"value":"41090", "label":"41090 MD-PEDT Neonatology"}]</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1v5sa6k">
+        <inputEntry id="UnaryTests_1mc6ri4">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1tqvn86">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0ng3cu3">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1a2poiq">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_152jao5">
+          <text>[]</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

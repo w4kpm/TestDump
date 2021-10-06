@@ -1,0 +1,663 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1e7871f" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.3.0">
+  <bpmn:process id="Process_04jm0bm" isExecutable="true">
+    <bpmn:documentation>Click Start over if you have updated your Protocol Builder entries.</bpmn:documentation>
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:documentation>Start Element Documentation</bpmn:documentation>
+      <bpmn:outgoing>SequenceFlow_1dhb8f4</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1dhb8f4" sourceRef="StartEvent_1" targetRef="Activity_LoadIND_Data" />
+    <bpmn:businessRuleTask id="BusinessTask_IND_NumberCheck" name="IND Number Check" camunda:decisionRef="decision_ind_check">
+      <bpmn:incoming>Flow_0pe6890</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1cwibmt</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1cwibmt" sourceRef="BusinessTask_IND_NumberCheck" targetRef="Activity_UVA_IND_Check" />
+    <bpmn:scriptTask id="Activity_LoadIND_Data" name="Load IND Data">
+      <bpmn:incoming>Flow_0jpp1sq</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1dhb8f4</bpmn:incoming>
+      <bpmn:outgoing>Flow_0pe6890</bpmn:outgoing>
+      <bpmn:script>details = study_info("details")
+ind_1 = details.IND_1
+ind_2 = details.IND_2
+ind_3 = details.IND_3
+is_ind = details.IS_IND
+is_uva_ind = details.IS_UVA_IND
+del(details)
+
+IND1_HolderName = {'value':"", 'label':""}
+IND2_HolderName = {'value':"", 'label':""}
+IND3_HolderName = {'value':"", 'label':""}
+
+if study_info("sponsors") is not None:
+	isPB_Sponsors = True
+	sponsors = study_info("sponsors")
+	spon_enum = []	
+	for x in sponsors:
+		spon_enum.append(
+			{
+				"value": x.SPONSOR_ID,
+				"label": x.SP_NAME
+			},
+		)
+	del(sponsors)
+else:
+	isPB_Sponsors = False
+	spon_enum = [
+		{
+			"value": 0,
+			"label": "No Sponsors Entered in PB"
+		},
+	]</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:exclusiveGateway id="Gateway_Count1" name="IS_IND?" default="Flow_00wk9rz">
+      <bpmn:incoming>Flow_0pwur5c</bpmn:incoming>
+      <bpmn:outgoing>Flow_04rl7gw</bpmn:outgoing>
+      <bpmn:outgoing>Flow_00wk9rz</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_04rl7gw" name="!= 1 (No or Null)" sourceRef="Gateway_Count1" targetRef="Activity_0yf2ypo">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">is_ind != 1</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_00wk9rz" name="= 1 (Yes)" sourceRef="Gateway_Count1" targetRef="Activity_ConfirmStatus" />
+    <bpmn:manualTask id="Activity_0yf2ypo" name="Show Contact Support">
+      <bpmn:documentation>{{ ind_message }}</bpmn:documentation>
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="IND_CntEntered" label="How Many?" type="enum">
+            <camunda:properties>
+              <camunda:property id="enum_type" value="radio" />
+            </camunda:properties>
+            <camunda:validation>
+              <camunda:constraint name="required" config="true" />
+            </camunda:validation>
+            <camunda:value id="one" name="1" />
+            <camunda:value id="two" name="2" />
+            <camunda:value id="three" name="3" />
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_04rl7gw</bpmn:incoming>
+      <bpmn:outgoing>Flow_0jpp1sq</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_0pwur5c" sourceRef="Activity_UVA_IND_Check" targetRef="Gateway_Count1" />
+    <bpmn:businessRuleTask id="Activity_UVA_IND_Check" name="UVA IND Check" camunda:decisionRef="Decision_UVA_IND_Check">
+      <bpmn:incoming>SequenceFlow_1cwibmt</bpmn:incoming>
+      <bpmn:outgoing>Flow_0pwur5c</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:userTask id="Activity_ConfirmStatus" name="Confirm IND Status" camunda:formKey="INDStatus">
+      <bpmn:documentation>{{ ind_message }}
+
+
+#### Sponsors previously entered in Protocol Builder
+{%+ for sp in spon_enum %}{{ sp.label }}{% if loop.last %}{% else %}, {% endif %}{% else %}No sponsors entered in Protocol Builder{% endfor %}</bpmn:documentation>
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="isStudyExempt" label="Is this study IND exempt?" type="boolean">
+            <camunda:properties>
+              <camunda:property id="value_expression" value="isStudyExemptDMN" />
+              <camunda:property id="hide_expression" value="not(isStudyExemptDMN)" />
+            </camunda:properties>
+            <camunda:validation>
+              <camunda:constraint name="required" config="True" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="IND1_Number" label="IND 1 Number:" type="string">
+            <camunda:properties>
+              <camunda:property id="description" value="IND 1 number from Protocol Builder, if available." />
+              <camunda:property id="value_expression" value="IRB_IND1_Number" />
+              <camunda:property id="read_only" value="true" />
+              <camunda:property id="group" value="IND 1" />
+              <camunda:property id="hide_expression" value="isStudyExempt" />
+            </camunda:properties>
+          </camunda:formField>
+          <camunda:formField id="IND1_HolderType" label="IND 1 Holder Type" type="enum">
+            <camunda:properties>
+              <camunda:property id="group" value="IND 1" />
+              <camunda:property id="value_expression" value="IND1_Holder_Type_Default" />
+              <camunda:property id="hide_expression" value="isStudyExempt" />
+            </camunda:properties>
+            <camunda:validation>
+              <camunda:constraint name="required" config="True" />
+            </camunda:validation>
+            <camunda:value id="Industry" name="Industry" />
+            <camunda:value id="UVaPI" name="UVA PI" />
+            <camunda:value id="OtherPI" name="Other PI" />
+            <camunda:value id="UVaCenter" name="UVA Center" />
+            <camunda:value id="OtherCollUniv" name="Other Colleges and Universities" />
+            <camunda:value id="NA" name="Not Applicable - no IND 1" />
+          </camunda:formField>
+          <camunda:formField id="IND2_Number" label="IND 2 Number:" type="string">
+            <camunda:properties>
+              <camunda:property id="description" value="IND 2 number from Protocol Builder, if available." />
+              <camunda:property id="value_expression" value="IRB_IND2_Number" />
+              <camunda:property id="read_only" value="true" />
+              <camunda:property id="group" value="IND 2" />
+              <camunda:property id="hide_expression" value="isStudyExempt" />
+            </camunda:properties>
+          </camunda:formField>
+          <camunda:formField id="IND2_HolderType" label="IND 2 Holder Type" type="enum">
+            <camunda:properties>
+              <camunda:property id="group" value="IND 2" />
+              <camunda:property id="value_expression" value="IND2_Holder_Type_Default" />
+              <camunda:property id="hide_expression" value="isStudyExempt" />
+            </camunda:properties>
+            <camunda:validation>
+              <camunda:constraint name="required" config="True" />
+            </camunda:validation>
+            <camunda:value id="Industry" name="Industry" />
+            <camunda:value id="UVaPI" name="UVA PI" />
+            <camunda:value id="OtherPI" name="Other PI" />
+            <camunda:value id="UVaCenter" name="UVA Center" />
+            <camunda:value id="OtherCollUniv" name="Other Colleges and Universities" />
+            <camunda:value id="NA" name="Not Applicable - no IND 2" />
+          </camunda:formField>
+          <camunda:formField id="IND3_Number" label="IND 3 Number:" type="string">
+            <camunda:properties>
+              <camunda:property id="description" value="IND 3 number from Protocol Builder, if available." />
+              <camunda:property id="value_expression" value="IRB_IND3_Number" />
+              <camunda:property id="read_only" value="true" />
+              <camunda:property id="group" value="IND 3" />
+              <camunda:property id="hide_expression" value="isStudyExempt" />
+            </camunda:properties>
+          </camunda:formField>
+          <camunda:formField id="IND3_HolderType" label="IND 3 Holder Type" type="enum">
+            <camunda:properties>
+              <camunda:property id="group" value="IND 3" />
+              <camunda:property id="value_expression" value="IND3_Holder_Type_Default" />
+              <camunda:property id="hide_expression" value="isStudyExempt" />
+            </camunda:properties>
+            <camunda:value id="Industry" name="Industry" />
+            <camunda:value id="UVaPI" name="UVA PI" />
+            <camunda:value id="OtherPI" name="Other PI" />
+            <camunda:value id="UVaCenter" name="UVA Center" />
+            <camunda:value id="OtherCollUniv" name="Other Colleges and Universities" />
+            <camunda:value id="NA" name="Not Applicable - no IND 3" />
+          </camunda:formField>
+          <camunda:formField id="isIND1_HolderNameInPB" label="IND 1 Holder name previously entered as a Sponsor in Protocol Builder" type="boolean" defaultValue="True">
+            <camunda:properties>
+              <camunda:property id="group" value="IND 1" />
+              <camunda:property id="hide_expression" value="isStudyExempt or IND1_HolderType.value == &#34;NA&#34;" />
+            </camunda:properties>
+            <camunda:validation>
+              <camunda:constraint name="required" config="True" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="isIND2_HolderNameInPB" label="IND 2 Holder name previously entered as a Sponsor in Protocol Builder" type="boolean">
+            <camunda:properties>
+              <camunda:property id="group" value="IND 2" />
+              <camunda:property id="hide_expression" value="isStudyExempt or IND2_HolderType.value == &#34;NA&#34;" />
+              <camunda:property id="value_expression" value="True" />
+            </camunda:properties>
+            <camunda:validation>
+              <camunda:constraint name="required" config="True" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="isIND3_HolderNameInPB" label="IND 3 Holder name previously entered as a Sponsor in Protocol Builder" type="boolean" defaultValue="True">
+            <camunda:properties>
+              <camunda:property id="group" value="IND 3" />
+              <camunda:property id="hide_expression" value="isStudyExempt or IND3_HolderType.value == &#34;NA&#34;" />
+            </camunda:properties>
+            <camunda:validation>
+              <camunda:constraint name="required" config="True" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="IND1_DrugBiologicName" label="IND 1 Drug/Biologic Name" type="string">
+            <camunda:properties>
+              <camunda:property id="group" value="IND 1" />
+              <camunda:property id="hide_expression" value="IND1_HolderType.value == &#34;NA&#34; and not(isStudyExempt)" />
+            </camunda:properties>
+          </camunda:formField>
+          <camunda:formField id="IND2_DrugBiologicName" label="IND 2 Drug/Biologic Name" type="string">
+            <camunda:properties>
+              <camunda:property id="group" value="IND 2" />
+              <camunda:property id="hide_expression" value="IND2_HolderType.value == &#34;NA&#34; and not(isStudyExempt)" />
+            </camunda:properties>
+          </camunda:formField>
+          <camunda:formField id="IND3_DrugBiologicName" label="IND 3 Drug/Biologic Name" type="string">
+            <camunda:properties>
+              <camunda:property id="group" value="IND 3" />
+              <camunda:property id="hide_expression" value="IND3_HolderType.value == &#34;NA&#34; and not(isStudyExempt)" />
+            </camunda:properties>
+          </camunda:formField>
+          <camunda:formField id="isIND1_UVA" label="Is UVA the IND 1 number holder?" type="boolean">
+            <camunda:properties>
+              <camunda:property id="group" value="IND 1" />
+              <camunda:property id="hide_expression" value="IND1_HolderType.value == &#34;NA&#34; or not(pb_is_uva_ind)" />
+              <camunda:property id="value_expression" value="pb_is_uva_ind" />
+            </camunda:properties>
+          </camunda:formField>
+          <camunda:formField id="isIND2_UVA" label="Is UVA the IND 2 number holder?" type="boolean">
+            <camunda:properties>
+              <camunda:property id="group" value="IND 2" />
+              <camunda:property id="hide_expression" value="IND2_HolderType.value == &#34;NA&#34; or not(pb_is_uva_ind)" />
+              <camunda:property id="value_expression" value="pb_is_uva_ind" />
+            </camunda:properties>
+          </camunda:formField>
+          <camunda:formField id="isIND3_UVA" label="Is UVA the IND 3 number holder?" type="boolean">
+            <camunda:properties>
+              <camunda:property id="group" value="IND 3" />
+              <camunda:property id="hide_expression" value="IND3_HolderType.value == &#34;NA&#34; or not(pb_is_uva_ind)" />
+              <camunda:property id="value_expression" value="pb_is_uva_ind" />
+            </camunda:properties>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_00wk9rz</bpmn:incoming>
+      <bpmn:outgoing>Flow_0tg2poz</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0jpp1sq" sourceRef="Activity_0yf2ypo" targetRef="Activity_LoadIND_Data" />
+    <bpmn:exclusiveGateway id="Gateway_17gbgob">
+      <bpmn:incoming>Flow_1rwn8zf</bpmn:incoming>
+      <bpmn:incoming>Flow_1y56shw</bpmn:incoming>
+      <bpmn:outgoing>Flow_0r6eorj</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1rwn8zf" name="Yes" sourceRef="Gateway_01xmozk" targetRef="Gateway_17gbgob">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">isStudyExempt or IND2_HolderType.value == "NA"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="Event_1saigql">
+      <bpmn:documentation>## IND Workflow Summary
+Below is a summary of the data associated with this workflow.  The Information icon[^1] indicates the data was obtained from Protocol Builder and will need to be changed there if incorrect.  You can click on the icon for additional information.  Other information can be updated, if needed, by clicking on the appropriate task found under **Previously Completed** or **'Start over'** across from **Tasks**.
+
+
+{% if isStudyExempt -%}
+This Investigational New Drug for this study **is** Exempt.
+{%- else -%}
+This Investigational New Drug for this study **is not** Exempt.
+{%- endif %}
+
+
+### IND-1
+{% if not(isStudyExempt) -%}
+{% if IND1_Number == "Not entered in Protocol Builder" -%}
+**IND-1#:** {{ IND1_Number }}[^2]
+{% else -%}
+**IND-1#:** {{ IND1_Number }}[^3]
+{% endif -%}
+{% if isIND1_UVA -%}
+UVA is the IND 1 number holder.
+{% endif -%}
+**IND-1 Holder Type:** {{ IND1_HolderType.label }}
+{% if isIND1_InSponsors -%}
+**IND-1 Holder Name:** {{ IND1_HolderName.label }}[^4]
+{% else -%}
+**IND-1 Holder Name:** {{ IND1_HolderName.label }}
+{% endif -%}
+{% endif -%}
+**IND 1 Drug/Biologic Name:** {{ IND1_DrugBiologicName }}
+
+
+### IND-2
+{% if IND2_HolderType.value == "NA" -%}
+No IND-2 associated with the study.
+{% else -%}
+{%- if not(isStudyExempt) -%}
+**IND-2#:** _{{ IND2_Number }}_
+{%- if isIND2_UVA -%}
+UVA is the IND 2 number holder.
+{% endif -%}
+**IND-2 Holder Type:** {{ IND2_HolderType.label }}
+**IND-2 Holder Name:** {{ IND2_HolderName.label }}
+{% endif -%}
+**IND 2 Drug/Biologic Name:** {{ IND2_DrugBiologicName }}
+{%- endif -%}
+
+
+### IND-3
+{% if IND3_HolderType.value == "NA" -%}
+No IND-3 associated with the study.
+{% else -%}
+{%- if not(isStudyExempt) -%}
+**IND-3#:** _{{ IND3_Number }}_
+{%- if isIND3_UVA -%}
+UVA is the IND 3 number holder.
+{% endif -%}
+**IND-3 Holder Type:** {{ IND3_HolderType.label }}
+**IND-3 Holder Name:** {{ IND3_HolderName.label }}
+{% endif -%}
+**IND 3 Drug/Biologic Name:** {{ IND3_DrugBiologicName }}
+{% endif -%}
+
+
+```[^1]
+Click on any Information icons below to obtain more information about data obtained from Protocol Builder.
+```
+```[^2]
+The IND number must be provided before Committee Review.  The study can be submitted for Pre-Review without it, but will need to be sent to the IRB before the Committee Review will be scheduled.
+```
+```[^3]
+The IND number was entered in the Auxiliary Information section of Protocol Builder and must be changed there if editing is required.
+```
+```[^4]
+The Holder Name was entered in Protocol Builder as a Sponsor.
+```</bpmn:documentation>
+      <bpmn:incoming>Flow_1r1xl52</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:exclusiveGateway id="Gateway_0aujjkw">
+      <bpmn:incoming>Flow_1us7o86</bpmn:incoming>
+      <bpmn:incoming>Flow_1nw067y</bpmn:incoming>
+      <bpmn:outgoing>Flow_1r1xl52</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1r1xl52" sourceRef="Gateway_0aujjkw" targetRef="Event_1saigql" />
+    <bpmn:sequenceFlow id="Flow_1us7o86" name="Yes" sourceRef="Gateway_1ur8p6g" targetRef="Gateway_0aujjkw">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">isStudyExempt or IND3_HolderType.value == "NA"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0r6eorj" sourceRef="Gateway_17gbgob" targetRef="Gateway_1ur8p6g" />
+    <bpmn:sequenceFlow id="Flow_0pe6890" sourceRef="Activity_LoadIND_Data" targetRef="BusinessTask_IND_NumberCheck" />
+    <bpmn:exclusiveGateway id="Gateway_01xmozk" name="Study Exempt or IND2 Holder Type is Not Applicable" default="Flow_00zojuq">
+      <bpmn:incoming>Flow_1rv2hb1</bpmn:incoming>
+      <bpmn:outgoing>Flow_00zojuq</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1rwn8zf</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_00zojuq" name="No" sourceRef="Gateway_01xmozk" targetRef="Activity_0up4rv7" />
+    <bpmn:exclusiveGateway id="Gateway_1ur8p6g" name="Study Exempt or IND3 Holder Type is Not Applicable" default="Flow_0lqaxrg">
+      <bpmn:incoming>Flow_0r6eorj</bpmn:incoming>
+      <bpmn:outgoing>Flow_1us7o86</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0lqaxrg</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0tg2poz" sourceRef="Activity_ConfirmStatus" targetRef="Gateway_1swxvdg" />
+    <bpmn:scriptTask id="Activity_0ezthtb" name="Set Sponsor Entity 1 Variables">
+      <bpmn:incoming>Flow_0q6ukph</bpmn:incoming>
+      <bpmn:outgoing>Flow_1q0rqw2</bpmn:outgoing>
+      <bpmn:script>entity = "IND 1 Holder"
+isEntityNameInPB = isIND1_HolderNameInPB
+EntityType = {}
+EntityType['value'] = IND1_HolderType['value']
+EntityType['label'] = IND1_HolderType['label']</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1q0rqw2" sourceRef="Activity_0ezthtb" targetRef="Activity_0chlgt4" />
+    <bpmn:callActivity id="Activity_0chlgt4" name="Get IND1 Holder Name" calledElement="Process_set_sponsor">
+      <bpmn:incoming>Flow_1q0rqw2</bpmn:incoming>
+      <bpmn:outgoing>Flow_1viqucu</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:sequenceFlow id="Flow_1viqucu" sourceRef="Activity_0chlgt4" targetRef="Activity_0zcov82" />
+    <bpmn:exclusiveGateway id="Gateway_1swxvdg" name="Study Exempt or IND1 Holder Type is Not Applicable" default="Flow_0q6ukph">
+      <bpmn:incoming>Flow_0tg2poz</bpmn:incoming>
+      <bpmn:outgoing>Flow_0q6ukph</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0jix2ak</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0q6ukph" name="No" sourceRef="Gateway_1swxvdg" targetRef="Activity_0ezthtb" />
+    <bpmn:exclusiveGateway id="Gateway_0nqqfnz">
+      <bpmn:incoming>Flow_0jix2ak</bpmn:incoming>
+      <bpmn:incoming>Flow_09l2z8g</bpmn:incoming>
+      <bpmn:outgoing>Flow_1rv2hb1</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1rv2hb1" sourceRef="Gateway_0nqqfnz" targetRef="Gateway_01xmozk" />
+    <bpmn:sequenceFlow id="Flow_0jix2ak" name="Yes" sourceRef="Gateway_1swxvdg" targetRef="Gateway_0nqqfnz">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">isStudyExempt or IND1_HolderType.value == "NA"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0viuhh3" sourceRef="Activity_0up4rv7" targetRef="Activity_0o16ew4" />
+    <bpmn:scriptTask id="Activity_0up4rv7" name="Set Sponsor Entity 2 Variables">
+      <bpmn:incoming>Flow_00zojuq</bpmn:incoming>
+      <bpmn:outgoing>Flow_0viuhh3</bpmn:outgoing>
+      <bpmn:script>entity = "IND 2 Holder"
+isEntityNameInPB = isIND2_HolderNameInPB
+EntityType = {}
+EntityType['value'] = IND2_HolderType['value']
+EntityType['label'] = IND2_HolderType['label']</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1s3rnr5" sourceRef="Activity_0o16ew4" targetRef="Activity_1bactsj" />
+    <bpmn:callActivity id="Activity_0o16ew4" name="Get IND2 Holder Name" calledElement="Process_set_sponsor">
+      <bpmn:incoming>Flow_0viuhh3</bpmn:incoming>
+      <bpmn:outgoing>Flow_1s3rnr5</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:sequenceFlow id="Flow_0lqaxrg" name="Yes" sourceRef="Gateway_1ur8p6g" targetRef="Activity_0yebyt1" />
+    <bpmn:sequenceFlow id="Flow_0v51jg6" sourceRef="Activity_0yebyt1" targetRef="Activity_0umpeq8" />
+    <bpmn:scriptTask id="Activity_0yebyt1" name="Set Sponsor Entity 3 Variables">
+      <bpmn:incoming>Flow_0lqaxrg</bpmn:incoming>
+      <bpmn:outgoing>Flow_0v51jg6</bpmn:outgoing>
+      <bpmn:script>entity = "IND 3 Holder"
+isEntityNameInPB = isIND3_HolderNameInPB
+EntityType = {}
+EntityType['value'] = IND3_HolderType['value']
+EntityType['label'] = IND3_HolderType['label']</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0d4a7fs" sourceRef="Activity_0umpeq8" targetRef="Activity_0grbvd9" />
+    <bpmn:callActivity id="Activity_0umpeq8" name="Get IND3 Holder Name" calledElement="Process_set_sponsor">
+      <bpmn:incoming>Flow_0v51jg6</bpmn:incoming>
+      <bpmn:outgoing>Flow_0d4a7fs</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:sequenceFlow id="Flow_09l2z8g" sourceRef="Activity_0zcov82" targetRef="Gateway_0nqqfnz" />
+    <bpmn:scriptTask id="Activity_0zcov82" name="Set IND1 Holder Name">
+      <bpmn:incoming>Flow_1viqucu</bpmn:incoming>
+      <bpmn:outgoing>Flow_09l2z8g</bpmn:outgoing>
+      <bpmn:script>IND1_HolderName = {}
+IND1_HolderName['value'] = EntityName['value']
+IND1_HolderName['label'] = EntityName['label']</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1y56shw" sourceRef="Activity_1bactsj" targetRef="Gateway_17gbgob" />
+    <bpmn:scriptTask id="Activity_1bactsj" name="Set IND2 Holder Name">
+      <bpmn:incoming>Flow_1s3rnr5</bpmn:incoming>
+      <bpmn:outgoing>Flow_1y56shw</bpmn:outgoing>
+      <bpmn:script>IND2_HolderName = {}
+IND2_HolderName['value'] = EntityName['value']
+IND2_HolderName['label'] = EntityName['label']</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="Activity_0grbvd9" name="Set IND3 Holder Name">
+      <bpmn:incoming>Flow_0d4a7fs</bpmn:incoming>
+      <bpmn:outgoing>Flow_1nw067y</bpmn:outgoing>
+      <bpmn:script>IND3_HolderName = {}
+IND3_HolderName['value'] = EntityName['value']
+IND3_HolderName['label'] = EntityName['label']</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1nw067y" sourceRef="Activity_0grbvd9" targetRef="Gateway_0aujjkw" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_04jm0bm">
+      <bpmndi:BPMNEdge id="Flow_1nw067y_di" bpmnElement="Flow_1nw067y">
+        <di:waypoint x="2880" y="437" />
+        <di:waypoint x="2945" y="437" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1y56shw_di" bpmnElement="Flow_1y56shw">
+        <di:waypoint x="2110" y="437" />
+        <di:waypoint x="2175" y="437" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09l2z8g_di" bpmnElement="Flow_09l2z8g">
+        <di:waypoint x="1370" y="437" />
+        <di:waypoint x="1435" y="437" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0d4a7fs_di" bpmnElement="Flow_0d4a7fs">
+        <di:waypoint x="2710" y="437" />
+        <di:waypoint x="2780" y="437" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0v51jg6_di" bpmnElement="Flow_0v51jg6">
+        <di:waypoint x="2530" y="437" />
+        <di:waypoint x="2610" y="437" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0lqaxrg_di" bpmnElement="Flow_0lqaxrg">
+        <di:waypoint x="2335" y="437" />
+        <di:waypoint x="2430" y="437" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2374" y="419" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1s3rnr5_di" bpmnElement="Flow_1s3rnr5">
+        <di:waypoint x="1950" y="437" />
+        <di:waypoint x="2010" y="437" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0viuhh3_di" bpmnElement="Flow_0viuhh3">
+        <di:waypoint x="1770" y="437" />
+        <di:waypoint x="1850" y="437" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jix2ak_di" bpmnElement="Flow_0jix2ak">
+        <di:waypoint x="860" y="412" />
+        <di:waypoint x="860" y="360" />
+        <di:waypoint x="1460" y="360" />
+        <di:waypoint x="1460" y="412" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1077" y="342" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1rv2hb1_di" bpmnElement="Flow_1rv2hb1">
+        <di:waypoint x="1485" y="437" />
+        <di:waypoint x="1545" y="437" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0q6ukph_di" bpmnElement="Flow_0q6ukph">
+        <di:waypoint x="885" y="437" />
+        <di:waypoint x="950" y="437" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="911" y="419" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1viqucu_di" bpmnElement="Flow_1viqucu">
+        <di:waypoint x="1210" y="437" />
+        <di:waypoint x="1270" y="437" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1q0rqw2_di" bpmnElement="Flow_1q0rqw2">
+        <di:waypoint x="1050" y="437" />
+        <di:waypoint x="1110" y="437" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0tg2poz_di" bpmnElement="Flow_0tg2poz">
+        <di:waypoint x="780" y="437" />
+        <di:waypoint x="835" y="437" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_00zojuq_di" bpmnElement="Flow_00zojuq">
+        <di:waypoint x="1595" y="437" />
+        <di:waypoint x="1670" y="437" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1625" y="419" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0pe6890_di" bpmnElement="Flow_0pe6890">
+        <di:waypoint x="150" y="437" />
+        <di:waypoint x="210" y="437" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0r6eorj_di" bpmnElement="Flow_0r6eorj">
+        <di:waypoint x="2225" y="437" />
+        <di:waypoint x="2285" y="437" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1us7o86_di" bpmnElement="Flow_1us7o86">
+        <di:waypoint x="2310" y="412" />
+        <di:waypoint x="2310" y="360" />
+        <di:waypoint x="2970" y="360" />
+        <di:waypoint x="2970" y="412" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2551" y="342" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1r1xl52_di" bpmnElement="Flow_1r1xl52">
+        <di:waypoint x="2995" y="437" />
+        <di:waypoint x="3082" y="437" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1rwn8zf_di" bpmnElement="Flow_1rwn8zf">
+        <di:waypoint x="1570" y="412" />
+        <di:waypoint x="1570" y="360" />
+        <di:waypoint x="2200" y="360" />
+        <di:waypoint x="2200" y="412" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1796" y="343" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jpp1sq_di" bpmnElement="Flow_0jpp1sq">
+        <di:waypoint x="510" y="570" />
+        <di:waypoint x="100" y="570" />
+        <di:waypoint x="100" y="477" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0pwur5c_di" bpmnElement="Flow_0pwur5c">
+        <di:waypoint x="470" y="437" />
+        <di:waypoint x="535" y="437" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_00wk9rz_di" bpmnElement="Flow_00wk9rz">
+        <di:waypoint x="585" y="437" />
+        <di:waypoint x="680" y="437" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="597" y="413" width="44" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_04rl7gw_di" bpmnElement="Flow_04rl7gw">
+        <di:waypoint x="560" y="462" />
+        <di:waypoint x="560" y="530" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="572" y="487" width="78" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1cwibmt_di" bpmnElement="SequenceFlow_1cwibmt">
+        <di:waypoint x="310" y="437" />
+        <di:waypoint x="370" y="437" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1dhb8f4_di" bpmnElement="SequenceFlow_1dhb8f4">
+        <di:waypoint x="-72" y="437" />
+        <di:waypoint x="50" y="437" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-108" y="419" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BusinessRuleTask_1cszgkx_di" bpmnElement="BusinessTask_IND_NumberCheck">
+        <dc:Bounds x="210" y="397" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0el77c2_di" bpmnElement="Activity_LoadIND_Data">
+        <dc:Bounds x="50" y="397" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0nrywiv_di" bpmnElement="Gateway_Count1" isMarkerVisible="true">
+        <dc:Bounds x="535" y="412" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="545" y="382" width="42" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0362d0t_di" bpmnElement="Activity_0yf2ypo">
+        <dc:Bounds x="510" y="530" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1w7kyic_di" bpmnElement="Activity_UVA_IND_Check">
+        <dc:Bounds x="370" y="397" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0oyp7wu_di" bpmnElement="Activity_ConfirmStatus">
+        <dc:Bounds x="680" y="397" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_17gbgob_di" bpmnElement="Gateway_17gbgob" isMarkerVisible="true">
+        <dc:Bounds x="2175" y="412" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1saigql_di" bpmnElement="Event_1saigql">
+        <dc:Bounds x="3082" y="419" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0aujjkw_di" bpmnElement="Gateway_0aujjkw" isMarkerVisible="true">
+        <dc:Bounds x="2945" y="412" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_01xmozk_di" bpmnElement="Gateway_01xmozk" isMarkerVisible="true">
+        <dc:Bounds x="1545" y="412" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1526" y="472" width="88" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1ur8p6g_di" bpmnElement="Gateway_1ur8p6g" isMarkerVisible="true">
+        <dc:Bounds x="2285" y="412" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2266" y="472" width="88" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0evqc53_di" bpmnElement="Activity_0ezthtb">
+        <dc:Bounds x="950" y="397" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1n9rniy_di" bpmnElement="Activity_0chlgt4">
+        <dc:Bounds x="1110" y="397" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1swxvdg_di" bpmnElement="Gateway_1swxvdg" isMarkerVisible="true">
+        <dc:Bounds x="835" y="412" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="817" y="469" width="88" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0nqqfnz_di" bpmnElement="Gateway_0nqqfnz" isMarkerVisible="true">
+        <dc:Bounds x="1435" y="412" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1cexvkm_di" bpmnElement="Activity_0up4rv7">
+        <dc:Bounds x="1670" y="397" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1osh922_di" bpmnElement="Activity_0o16ew4">
+        <dc:Bounds x="1850" y="397" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ulutmn_di" bpmnElement="Activity_0yebyt1">
+        <dc:Bounds x="2430" y="397" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1wjoy8j_di" bpmnElement="Activity_0umpeq8">
+        <dc:Bounds x="2610" y="397" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_10h54bd_di" bpmnElement="Activity_0zcov82">
+        <dc:Bounds x="1270" y="397" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0mxk7hs_di" bpmnElement="Activity_1bactsj">
+        <dc:Bounds x="2010" y="397" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1fz093l_di" bpmnElement="Activity_0grbvd9">
+        <dc:Bounds x="2780" y="397" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
