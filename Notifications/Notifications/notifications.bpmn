@@ -8,8 +8,8 @@
       <bpmn:lane id="Lane_16ml9fk">
         <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1qpy9ra</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0c5drp3</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1m9fnmv</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0c5drp3</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1jw70kl" name="supervisor">
         <bpmn:flowNodeRef>Gateway_0ved0t9</bpmn:flowNodeRef>
@@ -44,6 +44,9 @@
     <bpmn:sequenceFlow id="Flow_0mhtlkt" name="Yes" sourceRef="Gateway_0ved0t9" targetRef="Event_1m9fnmv">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">is_study_approved == True</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
+    <bpmn:endEvent id="Event_1m9fnmv">
+      <bpmn:incoming>Flow_0mhtlkt</bpmn:incoming>
+    </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_11tnx3n" name="No" sourceRef="Gateway_0ved0t9" targetRef="Activity_0c5drp3">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">is_study_approved == False</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
@@ -51,7 +54,7 @@
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="is_study_approved" label="Approve this study?" type="boolean">
-            <camunda:validation>
+             <camunda:validation>
               <camunda:constraint name="required" config="true" />
             </camunda:validation>
           </camunda:formField>
@@ -66,9 +69,6 @@
       <bpmn:incoming>Flow_11tnx3n</bpmn:incoming>
       <bpmn:outgoing>Flow_1ugh4wn</bpmn:outgoing>
     </bpmn:manualTask>
-    <bpmn:endEvent id="Event_1m9fnmv">
-      <bpmn:incoming>Flow_0mhtlkt</bpmn:incoming>
-    </bpmn:endEvent>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_163c7c8">
@@ -81,10 +81,6 @@
       <bpmndi:BPMNShape id="Lane_16ml9fk_di" bpmnElement="Lane_16ml9fk" isHorizontal="true">
         <dc:Bounds x="159" y="117" width="570" height="125" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_1ugh4wn_di" bpmnElement="Flow_1ugh4wn">
-        <di:waypoint x="400" y="177" />
-        <di:waypoint x="370" y="177" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_11tnx3n_di" bpmnElement="Flow_11tnx3n">
         <di:waypoint x="460" y="275" />
         <di:waypoint x="460" y="217" />
@@ -94,10 +90,10 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0mhtlkt_di" bpmnElement="Flow_0mhtlkt">
         <di:waypoint x="485" y="300" />
-        <di:waypoint x="610" y="300" />
-        <di:waypoint x="610" y="188" />
+        <di:waypoint x="660" y="300" />
+        <di:waypoint x="660" y="195" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="538" y="282" width="19" height="14" />
+          <dc:Bounds x="563" y="282" width="19" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0apr3nj_di" bpmnElement="Flow_0apr3nj">
@@ -112,6 +108,10 @@
         <di:waypoint x="215" y="177" />
         <di:waypoint x="270" y="177" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ugh4wn_di" bpmnElement="Flow_1ugh4wn">
+        <di:waypoint x="400" y="177" />
+        <di:waypoint x="370" y="177" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -124,15 +124,16 @@
           <dc:Bounds x="435" y="332" width="54" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1m9fnmv_di" bpmnElement="Event_1m9fnmv">
+        <dc:Bounds x="642" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1ps6jft_di" bpmnElement="Activity_107ojvq">
         <dc:Bounds x="270" y="260" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1al86eb_di" bpmnElement="Activity_0c5drp3">
         <dc:Bounds x="400" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1m9fnmv_di" bpmnElement="Event_1m9fnmv">
-        <dc:Bounds x="592" y="152" width="36" height="36" />
-      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
+ 
