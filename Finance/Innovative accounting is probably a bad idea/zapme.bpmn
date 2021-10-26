@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_2b97f3e" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_2b97f3e" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_07eaelo</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Activity_0jwx6o2" name="Another thing to zap">
+      <bpmn:incoming>Flow_07eaelo</bpmn:incoming>
+      <bpmn:outgoing>Flow_0nmfny4</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_07eaelo" sourceRef="StartEvent_1" targetRef="Activity_0jwx6o2" />
+    <bpmn:endEvent id="Event_00s96eu">
+      <bpmn:incoming>Flow_0nmfny4</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0nmfny4" sourceRef="Activity_0jwx6o2" targetRef="Event_00s96eu" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_2b97f3e">
+      <bpmndi:BPMNEdge id="Flow_07eaelo_di" bpmnElement="Flow_07eaelo">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="310" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0nmfny4_di" bpmnElement="Flow_0nmfny4">
+        <di:waypoint x="410" y="177" />
+        <di:waypoint x="512" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0jwx6o2_di" bpmnElement="Activity_0jwx6o2">
+        <dc:Bounds x="310" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_00s96eu_di" bpmnElement="Event_00s96eu">
+        <dc:Bounds x="512" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

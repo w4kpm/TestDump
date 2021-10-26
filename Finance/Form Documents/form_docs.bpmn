@@ -373,7 +373,9 @@ Avoid special characters: &amp; / \ . , [ ] { } ( ) ! ; : ' * ? &lt; &gt; | ¢ $
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0r80l4j_di" bpmnElement="SequenceFlow_0r80l4j">
         <di:waypoint x="1110" y="250" />
-        <di:waypoint x="1192" y="250" />
+        <di:waypoint x="1156" y="250" />
+        <di:waypoint x="1156" y="300" />
+        <di:waypoint x="1202" y="300" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0o5153v_di" bpmnElement="SequenceFlow_0o5153v">
         <di:waypoint x="935" y="250" />
@@ -442,14 +444,14 @@ Avoid special characters: &amp; / \ . , [ ] { } ( ) ! ; : ' * ? &lt; &gt; | ¢ $
       <bpmndi:BPMNShape id="ParallelGateway_0dbmv2g_di" bpmnElement="ParallelGateway_0dbmv2g">
         <dc:Bounds x="885" y="225" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="EndEvent_0e73fcs_di" bpmnElement="EndEvent_0e73fcs">
-        <dc:Bounds x="1192" y="232" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ScriptTask_03ivzbs_di" bpmnElement="ScriptTask_Load_Sum_Data">
         <dc:Bounds x="1010" y="210" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="UserTask_1485pr5_di" bpmnElement="UserTask_As_Appl">
         <dc:Bounds x="650" y="300" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0e73fcs_di" bpmnElement="EndEvent_0e73fcs">
+        <dc:Bounds x="1202" y="282" width="36" height="36" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
