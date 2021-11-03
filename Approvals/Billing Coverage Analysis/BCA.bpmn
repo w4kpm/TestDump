@@ -7,12 +7,12 @@
   <bpmn:process id="Process_1e4920c" name="&#10;" isExecutable="true">
     <bpmn:laneSet id="LaneSet_0ezt3am">
       <bpmn:lane id="Lane_1kfwexa" name="PIApprover">
-        <bpmn:flowNodeRef>Event_05fby1t</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1ecmq8y</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1f3k1nh</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1dte8q6</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_00qabun</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_092s5xc</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_05fby1t</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_0zcmbx3" name="SOM_CTO">
         <bpmn:flowNodeRef>Activity_1om2mzu</bpmn:flowNodeRef>
@@ -25,11 +25,6 @@
         <bpmn:flowNodeRef>Activity_0z7r1da</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
-    <bpmn:endEvent id="Event_05fby1t">
-      <bpmn:incoming>Flow_1xzhr66</bpmn:incoming>
-      <bpmn:incoming>Flow_0w83prj</bpmn:incoming>
-      <bpmn:incoming>Flow_0zucz8j</bpmn:incoming>
-    </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0w83prj" sourceRef="Activity_092s5xc" targetRef="Event_05fby1t" />
     <bpmn:sequenceFlow id="Flow_1xzhr66" name="No" sourceRef="Gateway_1ruyrtb" targetRef="Event_05fby1t">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">not(RequestApproval)</bpmn:conditionExpression>
@@ -209,6 +204,11 @@ CRConnect</bpmn:documentation>
 email(subject="BCA Action Needed", recipients=SOM_CTO_Email)</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_0zucz8j" sourceRef="Activity_00qabun" targetRef="Event_05fby1t" />
+    <bpmn:endEvent id="Event_05fby1t">
+      <bpmn:incoming>Flow_1xzhr66</bpmn:incoming>
+      <bpmn:incoming>Flow_0w83prj</bpmn:incoming>
+      <bpmn:incoming>Flow_0zucz8j</bpmn:incoming>
+    </bpmn:endEvent>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1uuj156">
@@ -227,7 +227,7 @@ email(subject="BCA Action Needed", recipients=SOM_CTO_Email)</bpmn:script>
       <bpmndi:BPMNEdge id="Flow_0zucz8j_di" bpmnElement="Flow_0zucz8j">
         <di:waypoint x="1340" y="515" />
         <di:waypoint x="1630" y="515" />
-        <di:waypoint x="1630" y="637" />
+        <di:waypoint x="1630" y="692" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1308b8v_di" bpmnElement="Flow_1308b8v">
         <di:waypoint x="800" y="25" />
@@ -283,18 +283,17 @@ email(subject="BCA Action Needed", recipients=SOM_CTO_Email)</bpmn:script>
       <bpmndi:BPMNEdge id="Flow_1xzhr66_di" bpmnElement="Flow_1xzhr66">
         <di:waypoint x="1085" y="330" />
         <di:waypoint x="1630" y="330" />
-        <di:waypoint x="1630" y="637" />
+        <di:waypoint x="1630" y="692" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1388" y="312" width="14" height="14" />
+          <dc:Bounds x="1388" y="312" width="15" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0w83prj_di" bpmnElement="Flow_0w83prj">
         <di:waypoint x="1540" y="655" />
-        <di:waypoint x="1612" y="655" />
+        <di:waypoint x="1576" y="655" />
+        <di:waypoint x="1576" y="710" />
+        <di:waypoint x="1612" y="710" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Event_05fby1t_di" bpmnElement="Event_05fby1t">
-        <dc:Bounds x="1612" y="637" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="412" y="7" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -333,6 +332,9 @@ email(subject="BCA Action Needed", recipients=SOM_CTO_Email)</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_14xgw5n_di" bpmnElement="Activity_0z7r1da">
         <dc:Bounds x="700" y="-15" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_05fby1t_di" bpmnElement="Event_05fby1t">
+        <dc:Bounds x="1612" y="692" width="36" height="36" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
